@@ -10,6 +10,7 @@ const CATEGORY_LABELS: Record<string, string> = {
   papers: "论文笔记",
   debugging: "排错手记",
   interests: "兴趣分享",
+  moments: "拾光",
 }
 
 export async function generateStaticParams() {
