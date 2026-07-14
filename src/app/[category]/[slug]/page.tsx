@@ -3,6 +3,7 @@ import { MDXContent } from "@/components/mdx-content"
 import { notFound } from "next/navigation"
 import { formatDate } from "@/lib/utils"
 import Link from "next/link"
+import Comments from "@/components/comments"
 
 const CATEGORY_LABELS: Record<string, string> = {
   projects: "项目记录",
@@ -62,6 +63,8 @@ export default async function PostPage({ params }: { params: Promise<{ category:
           ))}
         </div>
       )}
+
+      <Comments slug={`${category}/${slug}`} />
 
     </article>
   )
