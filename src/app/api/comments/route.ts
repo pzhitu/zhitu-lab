@@ -15,8 +15,8 @@ async function DELETE(request: NextRequest) {
   }
 
   // 简单密码保护
-  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD || "zhitu-admin"
-  if (pwd !== ADMIN_PASSWORD) {
+  const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
+  if (!ADMIN_PASSWORD || pwd !== ADMIN_PASSWORD) {
     return NextResponse.json({ error: "密码错误" }, { status: 403 })
   }
 
