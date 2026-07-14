@@ -33,6 +33,7 @@ export const CATEGORIES: CategoryInfo[] = [
   { slug: "papers", titleKey: "Papers.title", descriptionKey: "Papers.description" },
   { slug: "debugging", titleKey: "Debugging.title", descriptionKey: "Debugging.description" },
   { slug: "interests", titleKey: "Interests.title", descriptionKey: "Interests.description" },
+  { slug: "moments", titleKey: "Moments.title", descriptionKey: "Moments.description" },
 ]
 
 export function getPostBySlug(category: string, slug: string): Post | null {

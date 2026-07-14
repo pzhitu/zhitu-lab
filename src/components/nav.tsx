@@ -10,6 +10,7 @@ const NAV_ITEMS = [
   { href: "/papers", label: "论文笔记" },
   { href: "/debugging", label: "排错手记" },
   { href: "/interests", label: "兴趣分享" },
+  { href: "/moments", label: "拾光" },
   { href: "/archive", label: "归档" },
   { href: "/about", label: "关于" },
 ]

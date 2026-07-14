@@ -11,6 +11,7 @@ const CATEGORY_LABELS: Record<string, { title: string; description: string }> = 
   papers: { title: "论文笔记", description: "阅读论文后的个人理解、反思和关键思路提炼。" },
   debugging: { title: "排错手记", description: "排查问题的过程、根因分析和解决思路。" },
   interests: { title: "兴趣分享", description: "我感兴趣、正在学习的领域和知识分享。" },
+  moments: { title: "拾光", description: "语录、随想、感悟——沿途拾起的片刻光亮。" },
 }
 
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {
