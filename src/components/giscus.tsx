@@ -23,12 +23,12 @@ export function Giscus() {
     script.setAttribute("data-reactions-enabled", "1")
     script.setAttribute("data-emit-metadata", "0")
     script.setAttribute("data-input-position", "top")
-    script.setAttribute("data-theme", resolved === "dark" ? "dark_dimmed" : "preferred_color_scheme")
+    script.setAttribute("data-theme", resolved === "dark" ? "dark" : "light")
     script.setAttribute("data-lang", "zh-CN")
     script.setAttribute("data-loading", "lazy")
 
     ref.current.appendChild(script)
   }, [resolved])
 
-  return <section ref={ref} className="mt-16 pt-8 border-t border-[var(--color-border)] dark:border-[var(--color-border-dark)]" />
+  return <section ref={ref} className="mt-16" />
 }
