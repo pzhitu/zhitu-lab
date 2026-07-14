@@ -1,9 +1,31 @@
 import type { Metadata } from "next"
+import { DM_Sans, JetBrains_Mono, Lora } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
 import { Nav } from "@/components/nav"
 import { Footer } from "@/components/footer"
 import { getAllTags } from "@/lib/content"
 import "./globals.css"
+
+const lora = Lora({
+  subsets: ["latin"],
+  weight: ["500", "600", "700"],
+  variable: "--font-serif",
+  display: "swap",
+})
+
+const dmSans = DM_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600"],
+  variable: "--font-body",
+  display: "swap",
+})
+
+const jetbrainsMono = JetBrains_Mono({
+  subsets: ["latin"],
+  weight: ["400", "600"],
+  variable: "--font-mono",
+  display: "swap",
+})
 
 export const metadata: Metadata = {
   title: {
@@ -22,15 +44,11 @@ export default function RootLayout({
   const tags = getAllTags()
 
   return (
-    <html lang="zh-CN" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link
-          href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400..600;1,9..40,400..600&family=JetBrains+Mono:ital,wght@0,400..600;1,400..600&family=Lora:ital,wght@0,500..700;1,500..700&display=swap"
-          rel="stylesheet"
-        />
-      </head>
+    <html
+      lang="zh-CN"
+      className={`${lora.variable} ${dmSans.variable} ${jetbrainsMono.variable}`}
+      suppressHydrationWarning
+    >
       <body className="min-h-screen flex flex-col antialiased">
         <ThemeProvider>
           <Nav />
