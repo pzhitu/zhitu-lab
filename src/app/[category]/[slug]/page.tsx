@@ -1,6 +1,6 @@
 import { getPostBySlug, getAllPosts, CATEGORIES } from "@/lib/content"
 import { MDXContent } from "@/components/mdx-content"
-import { Giscus } from "@/components/giscus"
+import { WalineComments } from "@/components/waline-comments"
 import { notFound } from "next/navigation"
 import { formatDate } from "@/lib/utils"
 import Link from "next/link"
@@ -64,7 +64,7 @@ export default async function PostPage({ params }: { params: Promise<{ category:
         </div>
       )}
 
-      <Giscus />
+      <WalineComments />
     </article>
   )
 }

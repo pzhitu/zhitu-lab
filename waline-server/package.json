@@ -1,0 +1,12 @@
+{
+  "name": "waline-zhitu",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Waline comment system backend for Zhitu's Lab",
+  "scripts": {
+    "start": "node node_modules/@waline/vercel/vanilla.js"
+  },
+  "dependencies": {
+    "@waline/vercel": "^1.31.21"
+  }
+}
