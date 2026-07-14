@@ -4,6 +4,14 @@ import Link from "next/link"
 import { Post } from "@/lib/content"
 import { formatDate } from "@/lib/utils"
 
+const CATEGORY_LABELS: Record<string, string> = {
+  projects: "项目记录",
+  papers: "论文笔记",
+  debugging: "排错手记",
+  interests: "兴趣分享",
+  moments: "拾光",
+}
+
 export function PostCard({ post }: { post: Post }) {
   const title = post.frontmatter.title
   const description = post.frontmatter.description
@@ -15,7 +23,7 @@ export function PostCard({ post }: { post: Post }) {
         <div className="flex items-center gap-3 text-sm text-subtle dark:text-subtle-dark mb-2">
           <time dateTime={post.frontmatter.date}>{formatDate(post.frontmatter.date)}</time>
           <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-warm-100 dark:bg-warm-900 text-warm-700 dark:text-warm-300">
-            {post.category}
+            {CATEGORY_LABELS[post.category] || post.category}
           </span>
         </div>
 
