@@ -14,18 +14,17 @@ export function Giscus() {
     script.src = "https://giscus.app/client.js"
     script.async = true
     script.crossOrigin = "anonymous"
-    script.setAttribute("data-repo", "TODO/YOUR_REPO")
-    script.setAttribute("data-repo-id", "TODO_REPO_ID")
+    script.setAttribute("data-repo", "pzhitu/zhitu-lab")
+    script.setAttribute("data-repo-id", "R_kgDOTXzgXg")
     script.setAttribute("data-category", "Announcements")
-    script.setAttribute("data-category-id", "TODO_CATEGORY_ID")
+    script.setAttribute("data-category-id", "DIC_kwDOTXzgXs4DBLNV")
     script.setAttribute("data-mapping", "pathname")
-    script.setAttribute("data-strict", "0")
+    script.setAttribute("data-strict", "1")
     script.setAttribute("data-reactions-enabled", "1")
     script.setAttribute("data-emit-metadata", "0")
     script.setAttribute("data-input-position", "top")
-    script.setAttribute("data-theme", resolved === "dark" ? "dark_dimmed" : "light")
+    script.setAttribute("data-theme", resolved === "dark" ? "dark_dimmed" : "preferred_color_scheme")
     script.setAttribute("data-lang", "zh-CN")
-    script.setAttribute("data-term", "欢迎在评论区交流！")
     script.setAttribute("data-loading", "lazy")
 
     ref.current.appendChild(script)
