@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
 
 interface Tag {
   name: string
@@ -10,11 +9,6 @@ interface Tag {
 }
 
 export function TagCloud({ tags, compact = false }: { tags: Tag[]; compact?: boolean }) {
-  const pathname = usePathname()
-  const locale = pathname.split("/")[1]
-  const isZh = locale === "zh"
-  const base = `/${locale}`
-
   if (tags.length === 0) return null
 
   const maxCount = tags[0]?.count || 1
@@ -26,7 +20,7 @@ export function TagCloud({ tags, compact = false }: { tags: Tag[]; compact?: boo
           className="text-xs font-semibold uppercase tracking-wider text-subtle dark:text-subtle-dark mb-3"
           style={{ fontFamily: "var(--font-body)" }}
         >
-          Tags
+          标签
         </h4>
       )}
       <div className="flex flex-wrap gap-2">
@@ -38,20 +32,17 @@ export function TagCloud({ tags, compact = false }: { tags: Tag[]; compact?: boo
           return (
             <Link
               key={tag.name}
-              href={`${base}/tags?tag=${encodeURIComponent(tag.name)}`}
+              href={`/tags?tag=${encodeURIComponent(tag.name)}`}
               className={`${size} ${opacity} px-2.5 py-1 rounded-full transition-colors bg-surface dark:bg-surface-dark text-subtle dark:text-subtle-dark hover:text-text dark:hover:text-text-dark hover:bg-warm-100 dark:hover:bg-warm-900`}
             >
-              {isZh ? tag.name : tag.nameEn || tag.name}
+              {tag.name}
             </Link>
           )
         })}
       </div>
       {compact && tags.length > 15 && (
-        <Link
-          href={`${base}/tags`}
-          className="inline-block mt-2 text-xs text-subtle dark:text-subtle-dark hover:text-text dark:hover:text-text-dark"
-        >
-          + {tags.length - 15} more →
+        <Link href="/tags" className="inline-block mt-2 text-xs text-subtle dark:text-subtle-dark hover:text-text dark:hover:text-text-dark">
+          + {tags.length - 15} 更多 →
         </Link>
       )}
     </div>

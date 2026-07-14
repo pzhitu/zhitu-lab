@@ -1,12 +1,10 @@
 import { format, parseISO } from "date-fns"
-import { zhCN, enUS } from "date-fns/locale"
+import { zhCN } from "date-fns/locale"
 
-export function formatDate(dateStr: string, locale: string): string {
+export function formatDate(dateStr: string): string {
   try {
     const date = parseISO(dateStr)
-    return format(date, "yyyy-MM-dd", {
-      locale: locale === "zh" ? zhCN : enUS,
-    })
+    return format(date, "yyyy 年 M 月 d 日", { locale: zhCN })
   } catch {
     return dateStr
   }

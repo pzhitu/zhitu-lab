@@ -25,6 +25,7 @@ export function Giscus() {
     script.setAttribute("data-input-position", "top")
     script.setAttribute("data-theme", resolved === "dark" ? "dark_dimmed" : "light")
     script.setAttribute("data-lang", "zh-CN")
+    script.setAttribute("data-term", "欢迎在评论区交流！")
     script.setAttribute("data-loading", "lazy")
 
     ref.current.appendChild(script)

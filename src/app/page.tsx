@@ -1,10 +1,8 @@
-import { getTranslations } from "next-intl/server"
 import { getAllPosts } from "@/lib/content"
 import { Hero } from "@/components/hero"
 import { PostCard } from "@/components/post-card"
 
-export default async function HomePage() {
-  const t = await getTranslations("HomePage")
+export default function HomePage() {
   const posts = getAllPosts().slice(0, 6)
 
   return (
@@ -15,11 +13,11 @@ export default async function HomePage() {
           className="text-lg font-semibold uppercase tracking-wider text-subtle dark:text-subtle-dark mb-8"
           style={{ fontFamily: "var(--font-body)" }}
         >
-          {t("recentPosts")}
+          最近更新
         </h2>
 
         {posts.length === 0 ? (
-          <p className="text-subtle dark:text-subtle-dark">No posts yet. Start writing!</p>
+          <p className="text-subtle dark:text-subtle-dark">暂无文章，开始写吧！</p>
         ) : (
           <div className="grid gap-5 sm:grid-cols-2">
             {posts.map((post) => (
