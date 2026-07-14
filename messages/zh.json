@@ -1,0 +1,82 @@
+{
+  "HomePage": {
+    "title": "Zhitu's Lab",
+    "description": "A personal blog about engineering, research, and things I learn along the way.",
+    "hero": {
+      "greeting": "Hi, I'm Zhitu",
+      "tagline": "Engineering graduate student. I write about projects, research, debugging adventures, and things that spark my curiosity.",
+      "cta": "Read my latest posts"
+    },
+    "recentPosts": "Recent Posts"
+  },
+  "Nav": {
+    "home": "Home",
+    "projects": "Projects",
+    "papers": "Paper Notes",
+    "debugging": "Troubleshooting",
+    "interests": "Interests",
+    "archive": "Archive",
+    "about": "About",
+    "tags": "Tags"
+  },
+  "Footer": {
+    "builtWith": "Built with Next.js, MDX, and Tailwind CSS. Deployed on Vercel.",
+    "rss": "RSS",
+    "allTags": "All Tags"
+  },
+  "Post": {
+    "publishedOn": "Published on",
+    "readingTime": "min read",
+    "tags": "Tags",
+    "back": "← Back",
+    "comments": "Comments",
+    "tableOfContents": "On this page"
+  },
+  "About": {
+    "title": "About Me",
+    "description": "A little about who I am and what I do.",
+    "education": "Education",
+    "research": "Research Interests",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "Archive": {
+    "title": "Archive",
+    "description": "All posts, in chronological order.",
+    "empty": "No posts yet. Check back soon!"
+  },
+  "Tags": {
+    "title": "Tags",
+    "description": "Browse posts by topic.",
+    "empty": "No tags yet."
+  },
+  "Projects": {
+    "title": "Project Records",
+    "description": "Project write-ups, retrospectives, and technical deep-dives."
+  },
+  "Papers": {
+    "title": "Paper Notes",
+    "description": "Reading notes and reflections on academic papers."
+  },
+  "Debugging": {
+    "title": "Troubleshooting",
+    "description": "Debugging stories, error traces, and hard-won solutions."
+  },
+  "Interests": {
+    "title": "Interests",
+    "description": "Knowledge sharing on topics I'm passionate about."
+  },
+  "Theme": {
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System"
+  },
+  "Language": {
+    "switchTo": "Switch language"
+  },
+  "NotFound": {
+    "title": "404 — Page Not Found",
+    "description": "This page doesn't exist (yet). Maybe it will someday.",
+    "backHome": "← Back to home"
+  }
+}
