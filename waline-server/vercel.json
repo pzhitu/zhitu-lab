@@ -1,9 +1,0 @@
-{
-  "version": 2,
-  "builds": [
-    { "src": "node_modules/@waline/vercel/vanilla.js", "use": "@vercel/node" }
-  ],
-  "routes": [
-    { "src": "/(.*)", "dest": "node_modules/@waline/vercel/vanilla.js" }
-  ]
-}
