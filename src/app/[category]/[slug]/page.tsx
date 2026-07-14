@@ -4,6 +4,7 @@ import { notFound } from "next/navigation"
 import { formatDate } from "@/lib/utils"
 import Link from "next/link"
 import Comments from "@/components/comments"
+import type { Metadata } from "next"
 
 const CATEGORY_LABELS: Record<string, string> = {
   projects: "项目记录",
@@ -16,6 +17,38 @@ const CATEGORY_LABELS: Record<string, string> = {
 export async function generateStaticParams() {
   const posts = getAllPosts()
   return posts.map((post) => ({ category: post.category, slug: post.slug }))
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ category: string; slug: string }> }): Promise<Metadata> {
+  const { category, slug: encodedSlug } = await params
+  const slug = decodeURIComponent(encodedSlug)
+  const post = getPostBySlug(category, slug)
+  if (!post) return {}
+
+  const { title, titleEn, description, descriptionEn, tags, tagsEn } = post.frontmatter
+
+  const titleText = `${title}${titleEn ? ` (${titleEn})` : ""} — 知途的实验室`
+  const descText = descriptionEn
+    ? `${description} | ${descriptionEn}`
+    : description
+
+  return {
+    title: titleText,
+    description: descText,
+    keywords: [...tags, ...(tagsEn || [])],
+    openGraph: {
+      title: titleText,
+      description: descText,
+      type: "article",
+      publishedTime: post.frontmatter.date,
+      authors: ["知途"],
+      tags,
+      locale: "zh_CN",
+    },
+    alternates: {
+      canonical: `https://zhi-tu.me/${category}/${slug}`,
+    },
+  }
 }
 
 export default async function PostPage({ params }: { params: Promise<{ category: string; slug: string }> }) {

@@ -1,6 +1,7 @@
 import { getPostsByCategory, CATEGORIES } from "@/lib/content"
 import { PostCard } from "@/components/post-card"
 import { notFound } from "next/navigation"
+import type { Metadata } from "next"
 
 export function generateStaticParams() {
   return CATEGORIES.map((cat) => ({ category: cat.slug }))
@@ -12,6 +13,19 @@ const CATEGORY_LABELS: Record<string, { title: string; description: string }> = 
   debugging: { title: "排错手记", description: "排查问题的过程、根因分析和解决思路。" },
   interests: { title: "兴趣分享", description: "我感兴趣、正在学习的领域和知识分享。" },
   moments: { title: "拾光", description: "语录、随想、感悟——沿途拾起的片刻光亮。" },
+}
+
+export async function generateMetadata({ params }: { params: Promise<{ category: string }> }): Promise<Metadata> {
+  const { category } = await params
+  const labels = CATEGORY_LABELS[category]
+  if (!labels) return {}
+  return {
+    title: `${labels.title} — 知途的实验室`,
+    description: labels.description,
+    alternates: {
+      canonical: `https://zhi-tu.me/${category}`,
+    },
+  }
 }
 
 export default async function CategoryPage({ params }: { params: Promise<{ category: string }> }) {

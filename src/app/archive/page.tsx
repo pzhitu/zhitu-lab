@@ -1,5 +1,14 @@
 import { getAllPosts } from "@/lib/content"
 import { PostCard } from "@/components/post-card"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "归档 — 知途的实验室",
+  description: "所有文章，按时间排列。",
+  alternates: {
+    canonical: "https://zhi-tu.me/archive",
+  },
+}
 
 export default function ArchivePage() {
   const posts = getAllPosts()

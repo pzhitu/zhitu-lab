@@ -1,6 +1,15 @@
 import { getAllTags, getPostsByTag } from "@/lib/content"
 import { PostCard } from "@/components/post-card"
 import { TagCloud } from "@/components/tag-cloud"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "标签 — 知途的实验室",
+  description: "按主题浏览所有文章。",
+  alternates: {
+    canonical: "https://zhi-tu.me/tags",
+  },
+}
 
 export default async function TagsPage({ searchParams }: { searchParams: Promise<{ tag?: string }> }) {
   const { tag } = await searchParams

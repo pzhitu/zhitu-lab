@@ -1,6 +1,23 @@
 import { getAllPosts } from "@/lib/content"
 import { Hero } from "@/components/hero"
 import { PostCard } from "@/components/post-card"
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "知途的实验室 — 记录、思考与分享",
+  description: "知途的个人博客。记录项目复盘、论文阅读笔记、踩坑经验和兴趣分享。",
+  keywords: ["博客", "技术博客", "工科", "项目复盘", "论文笔记", "机器学习", "深度学习"],
+  openGraph: {
+    title: "知途的实验室 — 记录、思考与分享",
+    description: "知途的个人博客。记录项目复盘、论文阅读笔记、踩坑经验和兴趣分享。",
+    type: "website",
+    locale: "zh_CN",
+    url: "https://zhi-tu.me",
+  },
+  alternates: {
+    canonical: "https://zhi-tu.me",
+  },
+}
 
 export default function HomePage() {
   const posts = getAllPosts().slice(0, 6)

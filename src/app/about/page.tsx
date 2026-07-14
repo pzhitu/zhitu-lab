@@ -1,3 +1,13 @@
+import type { Metadata } from "next"
+
+export const metadata: Metadata = {
+  title: "关于 — 知途的实验室",
+  description: "关于知途——一位工科研究生的个人博客。",
+  alternates: {
+    canonical: "https://zhi-tu.me/about",
+  },
+}
+
 export default function AboutPage() {
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
