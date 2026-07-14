@@ -3,9 +3,15 @@
     "title": "Zhitu's Lab",
     "description": "A personal blog about engineering, research, and things I learn along the way.",
     "hero": {
-      "greeting": "Hi, I'm Zhitu",
-      "tagline": "Engineering graduate student. I write about projects, research, debugging adventures, and things that spark my curiosity.",
-      "cta": "Read my latest posts"
+      "greeting": "你好，我是知途",
+      "role": "工科研究生 / 写代码、做科研、偶尔折腾些有趣的东西",
+      "description": "这个博客记录了我的项目复盘、论文阅读笔记、踩坑经验和一些随想。把学到的东西写下来，是我对抗遗忘和焦虑的方式。",
+      "cta": "随便看看 →",
+      "social": {
+        "github": "GitHub",
+        "email": "邮件",
+        "rss": "RSS"
+      }
     },
     "recentPosts": "Recent Posts"
   },

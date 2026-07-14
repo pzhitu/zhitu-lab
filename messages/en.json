@@ -3,9 +3,15 @@
     "title": "Zhitu's Lab",
     "description": "A personal blog about engineering, research, and things I learn along the way.",
     "hero": {
-      "greeting": "Hi, I'm Zhitu",
-      "tagline": "Engineering graduate student. I write about projects, research, debugging adventures, and things that spark my curiosity.",
-      "cta": "Read my latest posts"
+      "greeting": "Hey, I'm Zhitu",
+      "role": "Engineering grad student · Building, researching, and figuring things out",
+      "description": "I write about project retrospectives, paper notes, debugging stories, and whatever happens to be on my mind. Writing things down is how I make sense of what I learn.",
+      "cta": "Browse my posts →",
+      "social": {
+        "github": "GitHub",
+        "email": "Email",
+        "rss": "RSS"
+      }
     },
     "recentPosts": "Recent Posts"
   },
