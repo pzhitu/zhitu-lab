@@ -1,5 +1,8 @@
 import type { Metadata } from "next"
 import { ThemeProvider } from "@/components/theme-provider"
+import { Nav } from "@/components/nav"
+import { Footer } from "@/components/footer"
+import { getAllTags } from "@/lib/content"
 import "./globals.css"
 
 export const metadata: Metadata = {
@@ -16,6 +19,8 @@ export default function RootLayout({
 }: {
   children: React.ReactNode
 }) {
+  const tags = getAllTags()
+
   return (
     <html lang="zh-CN" suppressHydrationWarning>
       <head>
@@ -27,7 +32,11 @@ export default function RootLayout({
         />
       </head>
       <body className="min-h-screen flex flex-col antialiased">
-        <ThemeProvider>{children}</ThemeProvider>
+        <ThemeProvider>
+          <Nav />
+          <main className="flex-1">{children}</main>
+          <Footer tags={tags} />
+        </ThemeProvider>
       </body>
     </html>
   )
