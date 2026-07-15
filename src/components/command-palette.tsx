@@ -16,6 +16,8 @@ export function CommandPalette() {
   const [query, setQuery] = useState("")
   const [index, setIndex] = useState(0)
   const inputRef = useRef<HTMLInputElement>(null)
+  const listRef = useRef<HTMLDivElement>(null)
+  const itemRefs = useRef<Map<number, HTMLDivElement>>(new Map())
   const [items, setItems] = useState<PaletteItem[]>([])
 
   // Colors all via CSS variables — auto-swap under html.dark, no JS theme check needed
@@ -120,6 +122,14 @@ export function CommandPalette() {
     }
   }
 
+  // Scroll the active item into view whenever index changes
+  useEffect(() => {
+    const el = itemRefs.current.get(index)
+    if (el) {
+      el.scrollIntoView({ block: "nearest", behavior: "smooth" })
+    }
+  }, [index])
+
   if (!open) return null
 
   const kindIcon: Record<string, string> = {
@@ -174,7 +184,7 @@ export function CommandPalette() {
         </div>
 
         {/* Results */}
-        <div className="max-h-72 overflow-y-auto p-2">
+        <div ref={listRef} className="max-h-72 overflow-y-auto p-2">
           {filtered.length === 0 ? (
             <div className="px-3 py-8 text-center text-sm" style={{ color: c.noResults }}>
               没有找到相关结果
@@ -182,6 +192,7 @@ export function CommandPalette() {
           ) : (
             filtered.slice(0, 20).map((item, i) => (
               <div
+                ref={(el) => { if (el) itemRefs.current.set(i, el); else itemRefs.current.delete(i) }}
                 key={`${item.kind}-${item.href}`}
                 className="flex items-center gap-3 px-3 py-2.5 rounded-md cursor-pointer text-sm transition-colors"
                 style={{
