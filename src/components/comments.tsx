@@ -70,14 +70,14 @@ function CommentForm({
             placeholder="署名"
             maxLength={50}
             required
-            className="flex-1 px-2.5 py-1.5 text-sm rounded-sm border border-[var(--color-border)] dark:border-[var(--color-border-dark)] bg-white dark:bg-[var(--color-surface-dark)] text-ink dark:text-ink-dark placeholder:text-ink-faint dark:placeholder:text-ink-faint-dark focus:outline-none focus:border-accent transition-colors"
+            className="flex-1 px-2.5 py-1.5 text-sm rounded-sm border border-[var(--color-border)] bg-[var(--color-note)] text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none focus:border-accent transition-colors"
           />
           <input
             type="email"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             placeholder="邮箱（选填）"
-            className="flex-1 px-2.5 py-1.5 text-sm rounded-sm border border-[var(--color-border)] dark:border-[var(--color-border-dark)] bg-white dark:bg-[var(--color-surface-dark)] text-ink dark:text-ink-dark placeholder:text-ink-faint dark:placeholder:text-ink-faint-dark focus:outline-none focus:border-accent transition-colors"
+            className="flex-1 px-2.5 py-1.5 text-sm rounded-sm border border-[var(--color-border)] bg-[var(--color-note)] text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none focus:border-accent transition-colors"
           />
         </div>
         <textarea
@@ -87,7 +87,7 @@ function CommentForm({
           maxLength={2000}
           required
           rows={3}
-          className="w-full px-2.5 py-1.5 text-sm rounded-sm border border-[var(--color-border)] dark:border-[var(--color-border-dark)] bg-white dark:bg-[var(--color-surface-dark)] text-ink dark:text-ink-dark placeholder:text-ink-faint dark:placeholder:text-ink-faint-dark focus:outline-none focus:border-accent transition-colors resize-y"
+          className="w-full px-2.5 py-1.5 text-sm rounded-sm border border-[var(--color-border)] bg-[var(--color-note)] text-[var(--color-ink)] placeholder:text-[var(--color-ink-faint)] focus:outline-none focus:border-accent transition-colors resize-y"
         />
       </div>
       <div className="flex items-center gap-2 mt-2">
