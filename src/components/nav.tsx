@@ -94,7 +94,7 @@ export function Nav() {
 
           <div className="flex items-center gap-3 shrink-0">
             <button
-              onClick={() => window.dispatchEvent(new KeyboardEvent("keydown", { key: "k", metaKey: true, ctrlKey: true }))}
+              onClick={() => document.dispatchEvent(new Event("toggle-command-palette"))}
               className="hidden sm:flex items-center gap-1.5 px-2 py-0.5 rounded transition-colors"
               style={{ color: barFg }}
               title="打开命令面板"

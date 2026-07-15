@@ -79,14 +79,24 @@ export function CommandPalette() {
 
   useEffect(() => {
     const handler = (e: KeyboardEvent) => {
-      if ((e.key === "k" || e.key === "K") && (e.metaKey || e.ctrlKey)) {
+      if ((e.key === "k" || e.key === "K") && (e.metaKey || e.ctrlKey) && !e.shiftKey) {
         e.preventDefault()
+        e.stopPropagation()
+        e.stopImmediatePropagation()
         setOpen((prev) => !prev)
       }
       if (e.key === "Escape") setOpen(false)
     }
-    window.addEventListener("keydown", handler)
-    return () => window.removeEventListener("keydown", handler)
+    // Capture on document: intercept Ctrl+K before Chrome steals it for the address bar
+    document.addEventListener("keydown", handler, { capture: true })
+    return () => document.removeEventListener("keydown", handler, { capture: true })
+  }, [])
+
+  // Listen for custom event dispatched by the nav's "检索" button
+  useEffect(() => {
+    const handler = () => setOpen((prev) => !prev)
+    document.addEventListener("toggle-command-palette", handler)
+    return () => document.removeEventListener("toggle-command-palette", handler)
   }, [])
 
   const filtered = query
