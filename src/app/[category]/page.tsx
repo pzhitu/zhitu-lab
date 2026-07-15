@@ -1,6 +1,7 @@
 import { getPostsByCategory, CATEGORIES } from "@/lib/content"
 import { PostCard } from "@/components/post-card"
 import { notFound } from "next/navigation"
+import Link from "next/link"
 import type { Metadata } from "next"
 
 export function generateStaticParams() {
@@ -20,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
   const labels = CATEGORY_LABELS[category]
   if (!labels) return {}
   return {
-    title: `${labels.title} — 知途的实验室`,
+    title: `${labels.title} — Zhitu Space`,
     description: labels.description,
     alternates: {
       canonical: `https://zhi-tu.me/${category}`,
@@ -38,24 +39,31 @@ export default async function CategoryPage({ params }: { params: Promise<{ categ
 
   return (
     <div className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
+      {/* Breadcrumb */}
+      <Link
+        href="/"
+        className="inline-flex items-center gap-1 text-sm text-ink-subtle dark:text-ink-subtle-dark hover:text-accent dark:hover:text-accent-light transition-colors mb-6"
+      >
+        ← 书桌
+      </Link>
+
       <div className="mb-10">
-        <h1 className="text-3xl sm:text-4xl font-bold tracking-tight mb-3" style={{ fontFamily: "var(--font-serif)" }}>
+        <h1 className="text-2xl sm:text-3xl font-bold tracking-tight mb-3" style={{ fontFamily: "var(--font-serif)" }}>
           {labels.title}
         </h1>
-        <p className="text-subtle dark:text-subtle-dark text-lg">{labels.description}</p>
+        <p className="text-ink-subtle dark:text-ink-subtle-dark text-base">{labels.description}</p>
       </div>
 
       {posts.length === 0 ? (
-        <div className="py-20 text-center">
-          <p className="text-subtle dark:text-subtle-dark text-lg">这个分类还没有文章。</p>
-          <p className="text-subtle dark:text-subtle-dark mt-2 text-sm">
-            在 <code>content/{category}/</code> 目录下创建 <code>.mdx</code> 文件即可。
+        <div className="index-card text-center py-16">
+          <p className="text-ink-subtle dark:text-ink-subtle-dark text-sm">
+            这个抽屉还是空的。
           </p>
         </div>
       ) : (
-        <div className="grid gap-5 sm:grid-cols-2">
-          {posts.map((post) => (
-            <PostCard key={post.slug} post={post} />
+        <div className="grid gap-4 sm:grid-cols-2">
+          {posts.map((post, i) => (
+            <PostCard key={post.slug} post={post} variant={i % 4} />
           ))}
         </div>
       )}

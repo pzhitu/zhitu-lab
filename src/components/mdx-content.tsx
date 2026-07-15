@@ -2,16 +2,14 @@ import { MDXRemote } from "next-mdx-remote/rsc"
 import rehypePrettyCode from "rehype-pretty-code"
 import rehypeSlug from "rehype-slug"
 
-const components = {
-  // Custom components can be added here later
-}
-
 export function MDXContent({ source }: { source: string }) {
   return (
-    <div className="prose-custom">
+    <div
+      className="paper-content max-w-[40rem] mx-auto"
+      style={{ fontFamily: "var(--font-serif)", fontSize: "0.9375rem", lineHeight: 1.85, color: "var(--color-ink)" }}
+    >
       <MDXRemote
         source={source}
-        components={components}
         options={{
           mdxOptions: {
             rehypePlugins: [
@@ -20,7 +18,7 @@ export function MDXContent({ source }: { source: string }) {
                 rehypePrettyCode,
                 {
                   theme: { dark: "github-dark", light: "github-light" },
-                  keepBackground: true,
+                  keepBackground: false,
                   defaultLang: "text",
                 },
               ],

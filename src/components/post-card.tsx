@@ -12,41 +12,62 @@ const CATEGORY_LABELS: Record<string, string> = {
   moments: "拾光",
 }
 
-export function PostCard({ post }: { post: Post }) {
-  const title = post.frontmatter.title
-  const description = post.frontmatter.description
-  const tags = post.frontmatter.tags
+const CARD_COLORS = ["", "index-card--yellow", "index-card--pink", "index-card--green"]
+
+export function PostCard({ post, variant = 0 }: { post: Post; variant?: number }) {
+  const { title, description, tags, date } = post.frontmatter
+  const colorClass = CARD_COLORS[variant % CARD_COLORS.length]
 
   return (
-    <Link href={`/${post.category}/${post.slug}`} className="card block group no-underline" style={{ color: "inherit" }}>
+    <Link
+      href={`/${post.category}/${post.slug}`}
+      className={`index-card ${colorClass} block group`}
+      style={{ color: "inherit", textDecoration: "none" }}
+    >
       <article>
-        <div className="flex items-center gap-3 text-sm text-subtle dark:text-subtle-dark mb-2">
-          <time dateTime={post.frontmatter.date}>{formatDate(post.frontmatter.date)}</time>
-          <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-warm-100 dark:bg-warm-900 text-warm-700 dark:text-warm-300">
+        <div className="flex items-center justify-between mb-2">
+          <span
+            className="text-[11px] font-medium px-2 py-0.5 rounded-sm"
+            style={{
+              fontFamily: "var(--font-serif)",
+              background: "var(--color-accent-soft)",
+              color: "var(--color-accent)",
+            }}
+          >
             {CATEGORY_LABELS[post.category] || post.category}
           </span>
+          <time dateTime={date} className="text-[11px]" style={{ color: "var(--color-ink-faint)" }}>
+            {formatDate(date)}
+          </time>
         </div>
 
         <h3
-          className="text-xl font-semibold mb-2 group-hover:text-warm-600 dark:group-hover:text-warm-400 transition-colors"
+          className="text-lg font-semibold mb-1.5 group-hover:text-accent dark:group-hover:text-accent-light transition-colors"
           style={{ fontFamily: "var(--font-serif)" }}
         >
           {title}
         </h3>
 
         {description && (
-          <p className="text-[15px] text-subtle dark:text-subtle-dark line-clamp-2 leading-relaxed mb-3">
+          <p className="text-[14px] leading-relaxed line-clamp-2 mb-2.5" style={{ color: "var(--color-ink-subtle)" }}>
             {description}
           </p>
         )}
 
         {tags.length > 0 && (
-          <div className="flex flex-wrap gap-1.5">
-            {tags.slice(0, 4).map((tag) => (
-              <span key={tag} className="text-xs px-2 py-0.5 rounded-md bg-surface dark:bg-surface-dark text-subtle dark:text-subtle-dark">
+          <div className="flex flex-wrap gap-1">
+            {tags.slice(0, 3).map((tag) => (
+              <span
+                key={tag}
+                className="text-[10px] px-1.5 py-0.5 rounded-sm"
+                style={{ background: "var(--color-surface)", color: "var(--color-ink-subtle)" }}
+              >
                 {tag}
               </span>
             ))}
+            {tags.length > 3 && (
+              <span className="text-[10px]" style={{ color: "var(--color-ink-faint)" }}>+{tags.length - 3}</span>
+            )}
           </div>
         )}
       </article>

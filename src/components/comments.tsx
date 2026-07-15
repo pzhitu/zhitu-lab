@@ -55,45 +55,55 @@ function CommentForm({
   }
 
   return (
-    <form onSubmit={handleSubmit} className={`${parentId ? "mt-3 pl-4 border-l-2 border-warm-200 dark:border-warm-800" : "mt-6"}`}>
-      {replyTo && <p className="text-xs text-subtle dark:text-subtle-dark mb-2">回复 @{replyTo}</p>}
-      <div className="flex gap-3 mb-2">
-        <input
-          type="text"
-          value={nickname}
-          onChange={(e) => setNickname(e.target.value)}
-          placeholder="昵称 *"
-          maxLength={50}
+    <form onSubmit={handleSubmit} className={`${parentId ? "mt-3 pl-4 border-l-2 border-amber-200 dark:border-amber-900" : "mt-5"}`}>
+      {replyTo && (
+        <p className="text-[11px] text-ink-faint dark:text-ink-faint-dark mb-2">
+          回复 @{replyTo}
+        </p>
+      )}
+      <div className="space-y-2">
+        <div className="flex gap-2">
+          <input
+            type="text"
+            value={nickname}
+            onChange={(e) => setNickname(e.target.value)}
+            placeholder="署名"
+            maxLength={50}
+            required
+            className="flex-1 px-2.5 py-1.5 text-sm rounded-sm border border-[var(--color-border)] dark:border-[var(--color-border-dark)] bg-white dark:bg-[var(--color-surface-dark)] text-ink dark:text-ink-dark placeholder:text-ink-faint dark:placeholder:text-ink-faint-dark focus:outline-none focus:border-accent transition-colors"
+          />
+          <input
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            placeholder="邮箱（选填）"
+            className="flex-1 px-2.5 py-1.5 text-sm rounded-sm border border-[var(--color-border)] dark:border-[var(--color-border-dark)] bg-white dark:bg-[var(--color-surface-dark)] text-ink dark:text-ink-dark placeholder:text-ink-faint dark:placeholder:text-ink-faint-dark focus:outline-none focus:border-accent transition-colors"
+          />
+        </div>
+        <textarea
+          value={content}
+          onChange={(e) => setContent(e.target.value)}
+          placeholder={parentId ? "回复…" : "翻阅后，留句话…"}
+          maxLength={2000}
           required
-          className="flex-1 px-3 py-2 text-sm rounded-lg border border-[var(--color-border)] dark:border-[var(--color-border-dark)] bg-white dark:bg-[var(--color-surface-dark)] text-text dark:text-text-dark placeholder-subtle dark:placeholder-subtle-dark focus:outline-none focus:border-warm-400 transition-colors"
-        />
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          placeholder="邮箱（选填）"
-          className="flex-1 px-3 py-2 text-sm rounded-lg border border-[var(--color-border)] dark:border-[var(--color-border-dark)] bg-white dark:bg-[var(--color-surface-dark)] text-text dark:text-text-dark placeholder-subtle dark:placeholder-subtle-dark focus:outline-none focus:border-warm-400 transition-colors"
+          rows={3}
+          className="w-full px-2.5 py-1.5 text-sm rounded-sm border border-[var(--color-border)] dark:border-[var(--color-border-dark)] bg-white dark:bg-[var(--color-surface-dark)] text-ink dark:text-ink-dark placeholder:text-ink-faint dark:placeholder:text-ink-faint-dark focus:outline-none focus:border-accent transition-colors resize-y"
         />
       </div>
-      <textarea
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-        placeholder={parentId ? "写下你的回复…" : "写下你的评论…"}
-        maxLength={2000}
-        required
-        rows={3}
-        className="w-full px-3 py-2 text-sm rounded-lg border border-[var(--color-border)] dark:border-[var(--color-border-dark)] bg-white dark:bg-[var(--color-surface-dark)] text-text dark:text-text-dark placeholder-subtle dark:placeholder-subtle-dark focus:outline-none focus:border-warm-400 transition-colors resize-y"
-      />
       <div className="flex items-center gap-2 mt-2">
         <button
           type="submit"
           disabled={submitting}
-          className="px-4 py-1.5 text-sm font-medium rounded-md bg-warm-500 hover:bg-warm-600 text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-3 py-1 text-[13px] font-medium rounded-sm bg-accent hover:bg-accent-light text-white transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
-          {submitting ? "提交中…" : "提交"}
+          {submitting ? "…" : "留言"}
         </button>
         {onCancel && (
-          <button type="button" onClick={onCancel} className="text-sm text-subtle dark:text-subtle-dark hover:text-text dark:hover:text-text-dark transition-colors">
+          <button
+            type="button"
+            onClick={onCancel}
+            className="text-[13px] text-ink-faint dark:text-ink-faint-dark hover:text-ink-subtle transition-colors"
+          >
             取消
           </button>
         )}
@@ -106,13 +116,11 @@ function CommentItem({
   comment,
   slug,
   onNewReply,
-  replyingTo,
   submitting,
 }: {
   comment: CommentData
   slug: string
   onNewReply: (data: { nickname: string; email: string; content: string; parent_id: number | null }) => void
-  replyingTo: number | null
   submitting: boolean
 }) {
   const [showReplyForm, setShowReplyForm] = useState(false)
@@ -120,20 +128,33 @@ function CommentItem({
   return (
     <div className="group">
       <div className="flex items-start gap-3 py-3">
-        <div className="flex-shrink-0 w-8 h-8 rounded-full bg-warm-100 dark:bg-warm-900 flex items-center justify-center text-sm font-medium text-warm-700 dark:text-warm-300">
-          {comment.nickname.charAt(0)}
+        <div
+          className="shrink-0 w-7 h-7 rounded-sm flex items-center justify-center text-[11px] font-medium"
+          style={{
+            background: "var(--color-accent-soft)",
+            color: "var(--color-accent)",
+            fontFamily: "var(--font-mono)",
+          }}
+        >
+          {comment.nickname.charAt(0).toUpperCase()}
         </div>
         <div className="flex-1 min-w-0">
           <div className="flex items-center gap-2 flex-wrap">
-            <span className="text-sm font-medium text-text dark:text-text-dark">{comment.nickname}</span>
-            <span className="text-xs text-subtle dark:text-subtle-dark">{formatTime(comment.created_at)}</span>
+            <span className="text-[13px] font-medium text-ink dark:text-ink-dark">
+              {comment.nickname}
+            </span>
+            <span className="text-[11px] text-ink-faint dark:text-ink-faint-dark">
+              · {formatTime(comment.created_at)}
+            </span>
           </div>
-          <p className="mt-1 text-sm text-text dark:text-text-dark leading-relaxed whitespace-pre-wrap">{comment.content}</p>
+          <p className="mt-0.5 text-[14px] text-ink dark:text-ink-dark leading-relaxed whitespace-pre-wrap">
+            {comment.content}
+          </p>
           <button
             onClick={() => setShowReplyForm(!showReplyForm)}
-            className="mt-1 text-xs text-subtle dark:text-subtle-dark hover:text-warm-600 dark:hover:text-warm-400 transition-colors"
+            className="mt-1 text-[11px] text-ink-faint dark:text-ink-faint-dark hover:text-accent dark:hover:text-accent-light transition-colors"
           >
-            回复
+            {showReplyForm ? "收起" : "回复"}
           </button>
 
           {showReplyForm && (
@@ -152,11 +173,16 @@ function CommentItem({
         </div>
       </div>
 
-      {/* 嵌套回复 */}
       {comment.replies.length > 0 && (
-        <div className="ml-5 pl-4 border-l border-[var(--color-border)] dark:border-[var(--color-border-dark)]">
+        <div className="ml-4 pl-4 border-l border-[var(--color-border)] dark:border-[var(--color-border-dark)]">
           {comment.replies.map((reply) => (
-            <CommentItem key={reply.id} comment={reply} slug={slug} onNewReply={onNewReply} replyingTo={replyingTo} submitting={submitting} />
+            <CommentItem
+              key={reply.id}
+              comment={reply}
+              slug={slug}
+              onNewReply={onNewReply}
+              submitting={submitting}
+            />
           ))}
         </div>
       )}
@@ -198,10 +224,9 @@ export default function Comments({ slug }: { slug: string }) {
       })
       if (!res.ok) {
         const err = await res.json()
-        setError(err.error || "提交失败")
+        setError(err.error || "留言失败")
         return
       }
-      // 重新拉取评论
       await fetchComments()
     } catch {
       setError("网络错误，请稍后重试")
@@ -211,30 +236,42 @@ export default function Comments({ slug }: { slug: string }) {
   }
 
   return (
-    <section className="mt-12 pt-8 border-t border-[var(--color-border)] dark:border-[var(--color-border-dark)]">
-      <h3 className="text-lg font-serif font-semibold text-text dark:text-text-dark mb-4">
-        评论 ({comments.length})
-      </h3>
-
-      {/* 评论列表 */}
+    <div>
       {loading ? (
-        <p className="text-sm text-subtle dark:text-subtle-dark">加载中…</p>
+        <p className="text-[13px] text-ink-faint dark:text-ink-faint-dark py-4">
+          正在翻开…
+        </p>
       ) : (
         <div className="divide-y divide-[var(--color-border)] dark:divide-[var(--color-border-dark)]">
           {comments.length === 0 && (
-            <p className="text-sm text-subtle dark:text-subtle-dark py-4">还没有评论，来写第一条吧。</p>
+            <p className="text-[13px] text-ink-faint dark:text-ink-faint-dark py-4">
+              还没有留言。来做第一个翻阅它的人吧。
+            </p>
           )}
           {comments.map((c) => (
-            <CommentItem key={c.id} comment={c} slug={slug} onNewReply={handleSubmit} replyingTo={null} submitting={submitting} />
+            <CommentItem
+              key={c.id}
+              comment={c}
+              slug={slug}
+              onNewReply={handleSubmit}
+              submitting={submitting}
+            />
           ))}
         </div>
       )}
 
-      {/* 错误 */}
-      {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
+      {error && (
+        <p className="mt-2 text-[12px]" style={{ color: "#dc2626" }}>
+          {error}
+        </p>
+      )}
 
-      {/* 新评论表单 */}
-      <CommentForm slug={slug} parentId={null} onSubmit={handleSubmit} submitting={submitting} />
-    </section>
+      <CommentForm
+        slug={slug}
+        parentId={null}
+        onSubmit={handleSubmit}
+        submitting={submitting}
+      />
+    </div>
   )
 }

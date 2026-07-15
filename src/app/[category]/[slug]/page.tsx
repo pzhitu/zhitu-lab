@@ -26,28 +26,20 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
   if (!post) return {}
 
   const { title, titleEn, description, descriptionEn, tags, tagsEn } = post.frontmatter
-
-  const titleText = `${title}${titleEn ? ` (${titleEn})` : ""} — 知途的实验室`
-  const descText = descriptionEn
-    ? `${description} | ${descriptionEn}`
-    : description
-
   return {
-    title: titleText,
-    description: descText,
+    title: `${title}${titleEn ? ` (${titleEn})` : ""} — Zhitu Space`,
+    description: descriptionEn ? `${description} | ${descriptionEn}` : description,
     keywords: [...tags, ...(tagsEn || [])],
     openGraph: {
-      title: titleText,
-      description: descText,
+      title: `${title}${titleEn ? ` (${titleEn})` : ""} — Zhitu Space`,
+      description: descriptionEn ? `${description} | ${descriptionEn}` : description,
       type: "article",
       publishedTime: post.frontmatter.date,
       authors: ["知途"],
       tags,
       locale: "zh_CN",
     },
-    alternates: {
-      canonical: `https://zhi-tu.me/${category}/${slug}`,
-    },
+    alternates: { canonical: `https://zhi-tu.me/${category}/${slug}` },
   }
 }
 
@@ -63,42 +55,85 @@ export default async function PostPage({ params }: { params: Promise<{ category:
   const { title, description, tags, date } = post.frontmatter
 
   return (
-    <article className="mx-auto max-w-4xl px-4 py-12 sm:px-6">
-      <Link href={`/${category}`} className="inline-flex items-center gap-1 text-sm text-subtle dark:text-subtle-dark hover:text-text dark:hover:text-text-dark mb-8">
-        ← 返回{CATEGORY_LABELS[category]}
-      </Link>
+    <article className="mx-auto max-w-4xl px-4 py-10 sm:px-6">
+      <div className="paper">
+        <Link
+          href={`/${category}`}
+          className="inline-flex items-center gap-1 text-[13px] mb-8 transition-colors"
+          style={{ color: "var(--color-ink-faint)" }}
+        >
+          ← {CATEGORY_LABELS[category]}
+        </Link>
 
-      <header className="mb-10">
-        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight mb-4" style={{ fontFamily: "var(--font-serif)", lineHeight: 1.2 }}>
-          {title}
-        </h1>
-        {description && (
-          <p className="text-lg text-subtle dark:text-subtle-dark mb-4">{description}</p>
-        )}
-        <div className="flex flex-wrap items-center gap-3 text-sm text-subtle dark:text-subtle-dark">
-          <time dateTime={date}>{formatDate(date)}</time>
-          <span>·</span>
-          <span className="px-2 py-0.5 rounded-full text-xs font-medium bg-warm-100 dark:bg-warm-900 text-warm-700 dark:text-warm-300">
-            {CATEGORY_LABELS[category]}
-          </span>
-        </div>
-      </header>
+        <header className="mb-10">
+          <h1
+            className="text-2xl sm:text-3xl font-bold tracking-tight mb-3"
+            style={{ fontFamily: "var(--font-serif)", lineHeight: 1.2 }}
+          >
+            {title}
+          </h1>
+          {description && (
+            <p className="text-[13px] leading-relaxed mb-3" style={{ color: "var(--color-ink-subtle)" }}>
+              {description}
+            </p>
+          )}
+          <div className="flex items-center gap-2 text-[13px]" style={{ color: "var(--color-ink-faint)" }}>
+            <time dateTime={date}>归档于 {formatDate(date)}</time>
+          </div>
+        </header>
 
-      <MDXContent source={post.content} />
+        <MDXContent source={post.content} />
 
-      {tags.length > 0 && (
-        <div className="mt-12 pt-6 border-t border-[var(--color-border)] dark:border-[var(--color-border-dark)]">
-          <span className="text-sm font-medium text-subtle dark:text-subtle-dark mr-3">标签：</span>
-          {tags.map((tag) => (
-            <Link key={tag} href={`/tags?tag=${encodeURIComponent(tag)}`} className="inline-block text-sm mr-2 mb-2 px-2.5 py-0.5 rounded-full bg-surface dark:bg-surface-dark text-subtle dark:text-subtle-dark hover:text-text dark:hover:text-text-dark transition-colors">
-              {tag}
+        {/* ── After the article ── */}
+        <div className="mt-20 pt-8 border-t border-[var(--color-border)] dark:border-[var(--color-border-dark)]">
+          {tags.length > 0 && (
+            <div className="mb-8">
+              <h3
+                className="text-xs font-semibold uppercase tracking-wider mb-3"
+                style={{ fontFamily: "var(--font-mono)", color: "var(--color-ink-subtle)" }}
+              >
+                索引词
+              </h3>
+              <div className="flex flex-wrap gap-1.5">
+                {tags.map((tag) => (
+                  <Link
+                    key={tag}
+                    href={`/tags?tag=${encodeURIComponent(tag)}`}
+                    className="text-xs px-2 py-0.5 rounded-sm bg-surface dark:bg-surface-dark transition-colors"
+                    style={{ color: "var(--color-ink-subtle)" }}
+                  >
+                    {tag}
+                  </Link>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <div className="text-center">
+            <Link
+              href="/"
+              className="inline-flex items-center gap-1 text-sm transition-colors"
+              style={{ color: "var(--color-ink-subtle)" }}
+            >
+              ← 回到书桌
             </Link>
-          ))}
+          </div>
         </div>
-      )}
+      </div>
 
-      <Comments slug={`${category}/${slug}`} />
-
+      {/* ── Comments ── */}
+      <div className="mt-16 mx-auto max-w-[40rem]">
+        <h3
+          className="text-xs font-semibold uppercase tracking-wider mb-4 flex items-center gap-2"
+          style={{ fontFamily: "var(--font-mono)", color: "var(--color-ink-subtle)" }}
+        >
+          <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-terminal-accent)" }} />
+          翻阅留言
+        </h3>
+        <div className="library-card">
+          <Comments slug={`${category}/${slug}`} />
+        </div>
+      </div>
     </article>
   )
 }
