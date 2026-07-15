@@ -18,9 +18,9 @@
   --color-highlight: #fef3c7;
 
   /* ── Dark mode — independent palette ── */
-  --color-paper-dark: #12100e;
-  --color-note-dark: #1c1916;
-  --color-note-dark-alt: #201d19;
+  --color-paper-dark: #0d0c0a;
+  --color-note-dark: #181512;
+  --color-note-dark-alt: #1d1915;
   --color-ink-dark: #f5f0e5;
   --color-ink-subtle-dark: #c8c2b5;
   --color-ink-faint-dark: #8a847a;
