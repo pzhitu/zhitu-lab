@@ -2,45 +2,57 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  --color-paper: #fffdf9;
-  --color-note: #fef9f0;
-  --color-note-yellow: #fdf5e0;
-  --color-note-pink: #fef5f2;
-  --color-note-green: #f5faf7;
-  --color-ink: #1f1c18;
-  --color-ink-subtle: #595550;
-  --color-ink-faint: #8a857d;
-  --color-surface: #f2ede6;
-  --color-border: #dfd9cf;
-  --color-accent: #b06814;
-  --color-accent-light: #d48018;
+  /* ═══════════════════════════════════════════════
+     Light mode — 温暖旧纸色调
+     ═══════════════════════════════════════════════ */
+  --color-paper: #fdf9f0;
+  --color-note: #faf3e6;
+  --color-note-yellow: #faf1de;
+  --color-note-pink: #fbf2ee;
+  --color-note-green: #f4f7f1;
+  --color-ink: #2d2315;
+  --color-ink-subtle: #6b5d4a;
+  --color-ink-faint: #9e8e7a;
+  --color-surface: #f3efe6;
+  --color-border: #d4c9b6;
+  --color-accent: #b8620e;
+  --color-accent-light: #d47818;
   --color-accent-soft: #fdf0da;
   --color-highlight: #fef3c7;
 
-  /* ── Dark mode — independent palette ── */
-  --color-paper-dark: #0d0c0a;
-  --color-note-dark: #181512;
-  --color-note-dark-alt: #1d1915;
-  --color-ink-dark: #f5f0e5;
-  --color-ink-subtle-dark: #c8c2b5;
-  --color-ink-faint-dark: #8a847a;
-  --color-surface-dark: #24211d;
-  --color-border-dark: #36322c;
-  --color-accent-dark: #f0b040;
+  /* ═══════════════════════════════════════════════
+     Dark mode — 独立暖棕夜色调
+     ═══════════════════════════════════════════════ */
+  --color-paper-dark: #161310;
+  --color-note-dark: #1e1a15;
+  --color-note-dark-alt: #211c17;
+  --color-note-dark-yellow: #1f1c13;
+  --color-note-dark-pink: #1f1a16;
+  --color-note-dark-green: #171b15;
+  --color-ink-dark: #ede0d0;
+  --color-ink-subtle-dark: #c5b9a5;
+  --color-ink-faint-dark: #a09585;
+  --color-surface-dark: #2c2720;
+  --color-border-dark: #4a4238;
+  --color-accent-dark: #f0b848;
   --color-accent-soft-dark: #3d2b18;
   --color-highlight-dark: #4a3720;
 
-  /* ── Terminal ── */
-  --color-terminal-bg: #0f1117;
-  --color-terminal-muted: #8b949e;
-  --color-terminal-fg: #c9d1d9;
-  --color-terminal-accent: #d2991d;
-  --color-terminal-light-bg: #f5f1eb;
-  --color-terminal-light-muted: #8b857c;
-  --color-terminal-light-fg: #3d3830;
-  --color-terminal-light-accent: #a56017;
+  /* ═══════════════════════════════════════════════
+     Terminal — 融入内容区色调，不再独立配色
+     ═══════════════════════════════════════════════ */
+  --color-terminal-bg: #f3efe6;
+  --color-terminal-muted: #9e8e7a;
+  --color-terminal-fg: #4a3d2e;
+  --color-terminal-accent: #b8620e;
+  --color-terminal-light-bg: #f3efe6;
+  --color-terminal-light-muted: #9e8e7a;
+  --color-terminal-light-fg: #4a3d2e;
+  --color-terminal-light-accent: #b8620e;
 
-  /* ── Warm palette (for backward compat) ── */
+  /* ═══════════════════════════════════════════════
+     Warm palette (for backward compat)
+     ═══════════════════════════════════════════════ */
   --color-warm-50: #fef9f0;
   --color-warm-100: #fdf0da;
   --color-warm-200: #fae1b2;
@@ -48,18 +60,18 @@
   --color-warm-400: #efb04d;
   --color-warm-500: #e69623;
   --color-warm-600: #c77a18;
-  --color-warm-700: #a56017;
+  --color-warm-700: #b8620e;
   --color-warm-800: #864d1b;
   --color-warm-900: #6d401a;
   --color-warm-950: #3f210b;
-  --color-cream: #faf7f2;
-  --color-cream-dark: #1a1815;
-  --color-text: #1f1c18;
-  --color-text-dark: #f2ede3;
-  --color-subtle: #595550;
-  --color-subtle-dark: #c4beb2;
+  --color-cream: #fdf9f0;
+  --color-cream-dark: #1e1a15;
+  --color-text: #2d2315;
+  --color-text-dark: #ede0d0;
+  --color-subtle: #6b5d4a;
+  --color-subtle-dark: #c5b9a5;
   --color-surface-raised: #ffffff;
-  --color-surface-raised-dark: #2d2a26;
+  --color-surface-raised-dark: #363028;
 
   --font-body: "Noto Serif SC", serif;
   --font-serif: "Noto Serif SC", serif;
@@ -90,15 +102,15 @@
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(ellipse 800px 500px at 50% 0%, rgba(240, 176, 64, 0.10) 0%, transparent 70%),
-      radial-gradient(ellipse 400px 300px at 50% 5%, rgba(240, 176, 64, 0.06) 0%, transparent 100%);
+      radial-gradient(ellipse 800px 500px at 50% 0%, rgba(240, 184, 72, 0.05) 0%, transparent 70%),
+      radial-gradient(ellipse 400px 300px at 50% 5%, rgba(240, 184, 72, 0.03) 0%, transparent 100%);
     pointer-events: none;
     z-index: 0;
     transition: opacity 0.4s ease;
   }
 
   h1, h2, h3, h4, h5, h6 {
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.3;
     color: var(--color-ink);
   }
@@ -113,7 +125,7 @@
   .dark a { color: var(--color-accent-dark); }
   .dark a:hover { color: var(--color-warm-400); }
 
-  p { line-height: 1.75; }
+  p { line-height: 1.8; }
 
   :not(pre) > code {
     font-family: var(--font-mono);
@@ -162,7 +174,7 @@
   }
   .index-card:hover {
     transform: translateY(-2px);
-    box-shadow: 0 1px 2px rgba(0,0,0,0.04), 0 4px 12px rgba(0,0,0,0.06);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05), 0 4px 14px rgba(0,0,0,0.07);
   }
   .index-card::before {
     content: "";
@@ -175,15 +187,15 @@
     opacity: 0.5;
   }
   .dark .index-card { background: var(--color-note-dark); border-color: var(--color-border-dark); box-shadow: none; }
-  .dark .index-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.3); }
-  .dark .index-card::before { background: var(--color-border-dark); }
+  .dark .index-card:hover { box-shadow: 0 4px 18px rgba(0,0,0,0.4); }
+  .dark .index-card::before { background: var(--color-border-dark); opacity: 0.4; }
 
   .index-card--yellow { background: var(--color-note-yellow); }
-  .index-card--pink { background: var(--color-note-pink); }
-  .index-card--green { background: var(--color-note-green); }
-  .dark .index-card--yellow,
-  .dark .index-card--pink,
-  .dark .index-card--green { background: var(--color-note-dark-alt); }
+  .index-card--pink   { background: var(--color-note-pink); }
+  .index-card--green  { background: var(--color-note-green); }
+  .dark .index-card--yellow { background: var(--color-note-dark-yellow); }
+  .dark .index-card--pink   { background: var(--color-note-dark-pink); }
+  .dark .index-card--green  { background: var(--color-note-dark-green); }
 
   .paper { max-width: 40rem; margin: 0 auto; }
 
@@ -204,7 +216,7 @@
     padding: 1rem 1.25rem;
     font-size: 0.9375rem;
   }
-  .dark .library-card { background: var(--color-note-dark-alt); border-color: var(--color-border-dark); }
+  .dark .library-card { background: var(--color-note-dark-yellow); border-color: var(--color-border-dark); }
 
   .btn-primary {
     display: inline-flex;
@@ -226,7 +238,7 @@
 @layer utilities {
   .cursor-blink { animation: cursor-blink 1s step-end infinite; }
 
-  .paper-content h2 { font-size: 1.25rem; font-weight: 600; margin-top: 2.5rem; margin-bottom: 0.75rem; line-height: 1.3; color: var(--color-ink); }
+  .paper-content h2 { font-size: 1.25rem; font-weight: 700; margin-top: 2.5rem; margin-bottom: 0.75rem; line-height: 1.3; color: var(--color-ink); }
   .dark .paper-content h2 { color: var(--color-ink-dark); }
   .paper-content h3 { font-size: 1.1rem; font-weight: 600; margin-top: 2rem; margin-bottom: 0.75rem; line-height: 1.3; color: var(--color-ink); }
   .dark .paper-content h3 { color: var(--color-ink-dark); }
@@ -244,7 +256,7 @@
   .paper-content a:hover { color: var(--color-accent-light); }
   .dark .paper-content a { color: var(--color-accent-dark); }
   .dark .paper-content a:hover { color: var(--color-warm-400); }
-  .paper-content strong { font-weight: 600; }
+  .paper-content strong { font-weight: 700; }
   .paper-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.875rem; }
   .paper-content th, .paper-content td { border: 1px solid var(--color-border); padding: 0.5rem 0.75rem; text-align: left; }
   .dark .paper-content th, .dark .paper-content td { border-color: var(--color-border-dark); }

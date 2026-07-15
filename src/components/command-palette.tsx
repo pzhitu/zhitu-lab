@@ -24,21 +24,21 @@ export function CommandPalette() {
   // Colors that adapt to theme
   const c = {
     overlayBg: "rgba(0,0,0,0.45)",
-    dialogBg: isDark ? "#0f1117" : "#faf7f2",
+    dialogBg: isDark ? "#161310" : "#fdf9f0",
     dialogBorder: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)",
     dialogShadow: isDark
       ? "0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05)"
       : "0 16px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06)",
-    prompt: isDark ? "#f0b040" : "#a56017",
-    inputFg: isDark ? "#f0ebe0" : "#3d3830",
-    inputPlaceholder: isDark ? "#9e9688" : "#a09890",
-    itemFg: isDark ? "#9e9688" : "#7a756e",
+    prompt: isDark ? "#f0b848" : "#b8620e",
+    inputFg: isDark ? "#ede0d0" : "#4a3d2e",
+    inputPlaceholder: isDark ? "#a09585" : "#9e8e7a",
+    itemFg: isDark ? "#a09585" : "#8a7c66",
     itemHoverBg: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)",
-    itemHoverFg: isDark ? "#f0ebe0" : "#3d3830",
+    itemHoverFg: isDark ? "#ede0d0" : "#4a3d2e",
     itemHref: isDark ? "rgba(255,255,255,0.35)" : "rgba(0,0,0,0.35)",
     thinBorder: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)",
     kbBg: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)",
-    noResults: isDark ? "#9e9688" : "#a09890",
+    noResults: isDark ? "#a09585" : "#9e8e7a",
   }
 
   const staticItems: PaletteItem[] = [

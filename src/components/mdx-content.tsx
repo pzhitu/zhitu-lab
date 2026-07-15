@@ -6,7 +6,7 @@ export function MDXContent({ source }: { source: string }) {
   return (
     <div
       className="paper-content max-w-[40rem] mx-auto"
-      style={{ fontFamily: "var(--font-serif)", fontSize: "0.9375rem", lineHeight: 1.85, color: "var(--color-ink)" }}
+      style={{ fontFamily: "var(--font-serif)", fontSize: "0.9375rem", lineHeight: 1.8, color: "var(--color-ink)" }}
     >
       <MDXRemote
         source={source}

@@ -20,11 +20,11 @@ export function Nav() {
   const segments = pathToPrompt(pathname)
   const isDark = resolved === "dark"
 
-  const barBg = isDark ? "#0f1117" : "#f5f1eb"
-  const barFg = isDark ? "#9e9688" : "#7a756e"
-  const barFgHover = isDark ? "#f0ebe0" : "#3d3830"
-  const barAccent = isDark ? "#f0b040" : "#a56017"
-  const barBorder = isDark ? "rgba(255,255,255,0.06)" : "#e0dbd2"
+  const barBg = isDark ? "#161310" : "#f3efe6"
+  const barFg = isDark ? "#a09585" : "#7a6d5a"
+  const barFgHover = isDark ? "#ede0d0" : "#4a3d2e"
+  const barAccent = isDark ? "#f0b848" : "#b8620e"
+  const barBorder = isDark ? "rgba(255,255,255,0.08)" : "#d4c9b6"
   const hoverBg = isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)"
   const kbBg = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)"
   const kbBorder = isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.10)"

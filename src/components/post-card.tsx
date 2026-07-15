@@ -42,7 +42,7 @@ export function PostCard({ post, variant = 0 }: { post: Post; variant?: number }
         </div>
 
         <h3
-          className="text-lg font-semibold mb-1.5 group-hover:text-accent dark:group-hover:text-accent-light transition-colors"
+          className="text-lg font-bold mb-1.5 group-hover:text-accent dark:group-hover:text-accent-light transition-colors"
           style={{ fontFamily: "var(--font-serif)" }}
         >
           {title}
