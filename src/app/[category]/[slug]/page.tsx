@@ -1,7 +1,7 @@
 import { getPostBySlug, getAllPosts, CATEGORIES } from "@/lib/content"
 import { MDXContent } from "@/components/mdx-content"
 import { notFound } from "next/navigation"
-import { formatDate } from "@/lib/utils"
+import { formatDateFull } from "@/lib/utils"
 import Link from "next/link"
 import Comments from "@/components/comments"
 import type { Metadata } from "next"
@@ -78,7 +78,7 @@ export default async function PostPage({ params }: { params: Promise<{ category:
             </p>
           )}
           <div className="flex items-center gap-2 text-[13px]" style={{ color: "var(--color-ink-faint)" }}>
-            <time dateTime={date}>归档于 {formatDate(date)}</time>
+            <time dateTime={date}>{formatDateFull(date)}</time>
           </div>
         </header>
 
