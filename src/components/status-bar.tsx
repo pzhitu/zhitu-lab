@@ -67,11 +67,7 @@ export function StatusBar() {
           ))}
         </div>
 
-        <div className="hidden sm:block" style={{ fontSize: "11px" }}>
-          {now.getFullYear()}-{String(now.getMonth() + 1).padStart(2, "0")}-{String(now.getDate()).padStart(2, "0")}
-        </div>
-
-        <div className="flex items-center gap-3" style={{ fontSize: "11px" }}>
+        <div className="flex items-center gap-3 ml-auto" style={{ fontSize: "11px" }}>
           <a
             href="/rss.xml"
             className="flex items-center gap-1 transition-colors"

@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { Post } from "@/lib/content"
-import { formatDate } from "@/lib/utils"
+import { formatDateFull } from "@/lib/utils"
 
 const CATEGORY_LABELS: Record<string, string> = {
   projects: "项目记录",
@@ -37,7 +37,7 @@ export function PostCard({ post, variant = 0 }: { post: Post; variant?: number }
             {CATEGORY_LABELS[post.category] || post.category}
           </span>
           <time dateTime={date} className="text-[11px]" style={{ color: "var(--color-ink-faint)" }}>
-            {formatDate(date)}
+            {formatDateFull(date)}
           </time>
         </div>
 
