@@ -2,29 +2,36 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
+  /* ── Light mode ── */
   --color-paper: #fcfaf6;
-  --color-paper-dark: #1a1815;
   --color-note: #fef9f0;
   --color-note-yellow: #fdf5e0;
   --color-note-pink: #fef5f2;
   --color-note-green: #f5faf7;
-  --color-note-dark: #252220;
-  --color-note-dark-alt: #282522;
   --color-ink: #2d2a26;
-  --color-ink-dark: #e8e4dd;
-  --color-ink-subtle: #78746d;
-  --color-ink-subtle-dark: #9e9890;
-  --color-ink-faint: #b8b3ab;
-  --color-ink-faint-dark: #6b6660;
+  --color-ink-subtle: #6b6560;
+  --color-ink-faint: #9e9890;
   --color-surface: #f5f1eb;
-  --color-surface-dark: #252220;
   --color-border: #e8e3da;
-  --color-border-dark: #33302c;
   --color-accent: #c77a18;
   --color-accent-light: #e69623;
   --color-accent-soft: #fdf0da;
-  --color-accent-soft-dark: #3f210b;
   --color-highlight: #fef3c7;
+
+  /* ── Dark mode — independent palette ── */
+  --color-paper-dark: #1c1a16;
+  --color-note-dark: #24211d;
+  --color-note-dark-alt: #282420;
+  --color-ink-dark: #f0ebe0;
+  --color-ink-subtle-dark: #c5bfb2;
+  --color-ink-faint-dark: #9e9688;
+  --color-surface-dark: #2a2722;
+  --color-border-dark: #3d3832;
+  --color-accent-dark: #f0b040;
+  --color-accent-soft-dark: #4a3020;
+  --color-highlight-dark: #4a3720;
+
+  /* ── Terminal ── */
   --color-terminal-bg: #0f1117;
   --color-terminal-muted: #8b949e;
   --color-terminal-fg: #c9d1d9;
@@ -33,6 +40,8 @@
   --color-terminal-light-muted: #8b857c;
   --color-terminal-light-fg: #3d3830;
   --color-terminal-light-accent: #a56017;
+
+  /* ── Warm palette (for backward compat) ── */
   --color-warm-50: #fef9f0;
   --color-warm-100: #fdf0da;
   --color-warm-200: #fae1b2;
@@ -47,11 +56,12 @@
   --color-cream: #faf7f2;
   --color-cream-dark: #1a1815;
   --color-text: #2d2a26;
-  --color-text-dark: #e8e4dd;
-  --color-subtle: #78746d;
-  --color-subtle-dark: #9e9890;
+  --color-text-dark: #f0ebe0;
+  --color-subtle: #6b6560;
+  --color-subtle-dark: #c5bfb2;
   --color-surface-raised: #ffffff;
   --color-surface-raised-dark: #2d2a26;
+
   --font-body: "Noto Serif SC", serif;
   --font-serif: "Noto Serif SC", serif;
   --font-mono: "JetBrains Mono", monospace;
@@ -81,8 +91,8 @@
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(ellipse 800px 500px at 50% 0%, rgba(199, 122, 24, 0.07) 0%, transparent 70%),
-      radial-gradient(ellipse 400px 300px at 50% 5%, rgba(230, 150, 35, 0.04) 0%, transparent 100%);
+      radial-gradient(ellipse 800px 500px at 50% 0%, rgba(240, 176, 64, 0.06) 0%, transparent 70%),
+      radial-gradient(ellipse 400px 300px at 50% 5%, rgba(240, 176, 64, 0.03) 0%, transparent 100%);
     pointer-events: none;
     z-index: 0;
     transition: opacity 0.4s ease;
@@ -101,7 +111,7 @@
 
   a { color: var(--color-accent); text-decoration: none; transition: color 0.2s ease; }
   a:hover { color: var(--color-accent-light); }
-  .dark a { color: var(--color-accent-light); }
+  .dark a { color: var(--color-accent-dark); }
   .dark a:hover { color: var(--color-warm-400); }
 
   p { line-height: 1.75; }
@@ -116,7 +126,7 @@
   }
   .dark :not(pre) > code {
     background: var(--color-surface-dark);
-    color: var(--color-warm-300);
+    color: var(--color-accent-dark);
   }
 
   pre { font-family: var(--font-mono); border-radius: 0.5rem; overflow-x: auto; }
@@ -230,10 +240,10 @@
   .paper-content pre { font-family: var(--font-mono); border-radius: 0.5rem; overflow-x: auto; margin: 1.5rem 0; }
   .paper-content pre code { background: none; padding: 0; font-size: 0.8125rem; line-height: 1.65; }
   .paper-content :not(pre) > code { font-family: var(--font-mono); font-size: 0.85em; background: var(--color-surface); padding: 0.15em 0.4em; border-radius: 0.25rem; color: var(--color-accent); }
-  .dark .paper-content :not(pre) > code { background: var(--color-surface-dark); color: var(--color-warm-300); }
+  .dark .paper-content :not(pre) > code { background: var(--color-surface-dark); color: var(--color-accent-dark); }
   .paper-content a { color: var(--color-accent); text-decoration: none; }
   .paper-content a:hover { color: var(--color-accent-light); }
-  .dark .paper-content a { color: var(--color-accent-light); }
+  .dark .paper-content a { color: var(--color-accent-dark); }
   .dark .paper-content a:hover { color: var(--color-warm-400); }
   .paper-content strong { font-weight: 600; }
   .paper-content table { width: 100%; border-collapse: collapse; margin: 1.5rem 0; font-size: 0.875rem; }

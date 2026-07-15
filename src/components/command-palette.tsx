@@ -29,16 +29,16 @@ export function CommandPalette() {
     dialogShadow: isDark
       ? "0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05)"
       : "0 16px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06)",
-    prompt: isDark ? "#d2991d" : "#a56017",
-    inputFg: isDark ? "#c9d1d9" : "#3d3830",
-    inputPlaceholder: isDark ? "#8b949e" : "#a09890",
-    itemFg: isDark ? "#8b949e" : "#7a756e",
+    prompt: isDark ? "#f0b040" : "#a56017",
+    inputFg: isDark ? "#f0ebe0" : "#3d3830",
+    inputPlaceholder: isDark ? "#9e9688" : "#a09890",
+    itemFg: isDark ? "#9e9688" : "#7a756e",
     itemHoverBg: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)",
-    itemHoverFg: isDark ? "#c9d1d9" : "#3d3830",
+    itemHoverFg: isDark ? "#f0ebe0" : "#3d3830",
     itemHref: isDark ? "rgba(255,255,255,0.35)" : "rgba(0,0,0,0.35)",
-    thinBorder: isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.06)",
+    thinBorder: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)",
     kbBg: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)",
-    noResults: isDark ? "#8b949e" : "#a09890",
+    noResults: isDark ? "#9e9688" : "#a09890",
   }
 
   const staticItems: PaletteItem[] = [

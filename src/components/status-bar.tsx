@@ -16,12 +16,12 @@ export function StatusBar() {
   const isDark = resolved === "dark"
 
   const barBg = isDark ? "#0f1117" : "#f5f1eb"
-  const barFg = isDark ? "#8b949e" : "#7a756e"
-  const barFgHover = isDark ? "#c9d1d9" : "#3d3830"
-  const barBorder = isDark ? "rgba(255,255,255,0.05)" : "#e0dbd2"
-  const kbBg = isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.05)"
+  const barFg = isDark ? "#9e9688" : "#7a756e"
+  const barFgHover = isDark ? "#f0ebe0" : "#3d3830"
+  const barBorder = isDark ? "rgba(255,255,255,0.06)" : "#e0dbd2"
+  const kbBg = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)"
   const kbBorder = isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.10)"
-  const accent = isDark ? "#d2991d" : "#a56017"
+  const accent = isDark ? "#f0b040" : "#a56017"
 
   const links: StatusLink[] = [
     { key: "W", label: "书桌", href: "/" },
