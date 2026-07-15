@@ -19,15 +19,11 @@ export function StatusBar() {
   const accent = "var(--color-accent)"
 
   const links: StatusLink[] = [
-    { key: "W", label: "书桌", href: "/" },
-    { key: "P", label: "项目", href: "/projects", hideSm: true },
-    { key: "N", label: "论文", href: "/papers", hideSm: true },
-    { key: "D", label: "排错", href: "/debugging", hideSm: true },
-    { key: "I", label: "兴趣", href: "/interests", hideSm: true },
-    { key: "O", label: "拾光", href: "/moments", hideSm: true },
+    { key: "H", label: "主页", href: "/" },
+    { key: "F", label: "分类", href: "/categories" },
     { key: "M", label: "归档", href: "/archive" },
     { key: "T", label: "索引", href: "/tags" },
-    { key: "A", label: "关于", href: "/about", hideSm: true },
+    { key: "A", label: "关于", href: "/about" },
   ]
 
   return (
