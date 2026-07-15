@@ -2,33 +2,32 @@
 @plugin "@tailwindcss/typography";
 
 @theme {
-  /* ── Light mode ── */
-  --color-paper: #fcfaf6;
+  --color-paper: #fffdf9;
   --color-note: #fef9f0;
   --color-note-yellow: #fdf5e0;
   --color-note-pink: #fef5f2;
   --color-note-green: #f5faf7;
-  --color-ink: #2d2a26;
-  --color-ink-subtle: #6b6560;
-  --color-ink-faint: #9e9890;
-  --color-surface: #f5f1eb;
-  --color-border: #e8e3da;
-  --color-accent: #c77a18;
-  --color-accent-light: #e69623;
+  --color-ink: #1f1c18;
+  --color-ink-subtle: #595550;
+  --color-ink-faint: #8a857d;
+  --color-surface: #f2ede6;
+  --color-border: #dfd9cf;
+  --color-accent: #b06814;
+  --color-accent-light: #d48018;
   --color-accent-soft: #fdf0da;
   --color-highlight: #fef3c7;
 
   /* ── Dark mode — independent palette ── */
-  --color-paper-dark: #1c1a16;
-  --color-note-dark: #24211d;
-  --color-note-dark-alt: #282420;
-  --color-ink-dark: #f0ebe0;
-  --color-ink-subtle-dark: #c5bfb2;
-  --color-ink-faint-dark: #9e9688;
-  --color-surface-dark: #2a2722;
-  --color-border-dark: #3d3832;
+  --color-paper-dark: #12100e;
+  --color-note-dark: #1c1916;
+  --color-note-dark-alt: #201d19;
+  --color-ink-dark: #f2ede3;
+  --color-ink-subtle-dark: #c4beb2;
+  --color-ink-faint-dark: #8a847a;
+  --color-surface-dark: #24211d;
+  --color-border-dark: #36322c;
   --color-accent-dark: #f0b040;
-  --color-accent-soft-dark: #4a3020;
+  --color-accent-soft-dark: #3d2b18;
   --color-highlight-dark: #4a3720;
 
   /* ── Terminal ── */
@@ -55,10 +54,10 @@
   --color-warm-950: #3f210b;
   --color-cream: #faf7f2;
   --color-cream-dark: #1a1815;
-  --color-text: #2d2a26;
-  --color-text-dark: #f0ebe0;
-  --color-subtle: #6b6560;
-  --color-subtle-dark: #c5bfb2;
+  --color-text: #1f1c18;
+  --color-text-dark: #f2ede3;
+  --color-subtle: #595550;
+  --color-subtle-dark: #c4beb2;
   --color-surface-raised: #ffffff;
   --color-surface-raised-dark: #2d2a26;
 
