@@ -3,7 +3,6 @@
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { LampToggle } from "./lamp-toggle"
-import { useTheme } from "./theme-provider"
 
 function pathToPrompt(pathname: string): { label: string; href: string }[] {
   if (pathname === "/") return []
@@ -16,18 +15,17 @@ function pathToPrompt(pathname: string): { label: string; href: string }[] {
 
 export function Nav() {
   const pathname = usePathname()
-  const { resolved } = useTheme()
   const segments = pathToPrompt(pathname)
-  const isDark = resolved === "dark"
 
-  const barBg = isDark ? "#161310" : "#f3efe6"
-  const barFg = isDark ? "#a09585" : "#7a6d5a"
-  const barFgHover = isDark ? "#ede0d0" : "#4a3d2e"
-  const barAccent = isDark ? "#f0b848" : "#b8620e"
-  const barBorder = isDark ? "rgba(255,255,255,0.08)" : "#d4c9b6"
-  const hoverBg = isDark ? "rgba(255,255,255,0.05)" : "rgba(0,0,0,0.04)"
-  const kbBg = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)"
-  const kbBorder = isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.10)"
+  // All colors via CSS custom properties that auto-swap under html.dark
+  const barBg = "var(--color-terminal-bg)"
+  const barFg = "var(--color-terminal-fg)"
+  const barFgHover = "var(--color-terminal-fg-hover)"
+  const barAccent = "var(--color-terminal-accent)"
+  const barBorder = "var(--color-terminal-border)"
+  const hoverBg = "var(--color-surface)"
+  const kbBg = "var(--color-surface)"
+  const kbBorder = "var(--color-border)"
   const mono = "var(--font-mono)"
   const bodyFont = "var(--font-serif)"
 

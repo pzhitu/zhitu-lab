@@ -1,7 +1,6 @@
 "use client"
 
 import Link from "next/link"
-import { useTheme } from "./theme-provider"
 
 interface StatusLink {
   key: string
@@ -11,17 +10,13 @@ interface StatusLink {
 }
 
 export function StatusBar() {
-  const now = new Date()
-  const { resolved } = useTheme()
-  const isDark = resolved === "dark"
-
-  const barBg = isDark ? "#161310" : "#f3efe6"
-  const barFg = isDark ? "#a09585" : "#7a6d5a"
-  const barFgHover = isDark ? "#ede0d0" : "#4a3d2e"
-  const barBorder = isDark ? "rgba(255,255,255,0.08)" : "#d4c9b6"
-  const kbBg = isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.05)"
-  const kbBorder = isDark ? "rgba(255,255,255,0.12)" : "rgba(0,0,0,0.10)"
-  const accent = isDark ? "#f0b848" : "#b8620e"
+  const barBg = "var(--color-terminal-bg)"
+  const barFg = "var(--color-terminal-fg)"
+  const barFgHover = "var(--color-terminal-fg-hover)"
+  const barBorder = "var(--color-terminal-border)"
+  const kbBg = "var(--color-surface)"
+  const kbBorder = "var(--color-border)"
+  const accent = "var(--color-accent)"
 
   const links: StatusLink[] = [
     { key: "W", label: "书桌", href: "/" },

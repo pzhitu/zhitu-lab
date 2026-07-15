@@ -2,7 +2,6 @@
 
 import { useCallback, useEffect, useRef, useState } from "react"
 import { useRouter } from "next/navigation"
-import { useTheme } from "./theme-provider"
 
 interface PaletteItem {
   label: string
@@ -12,8 +11,6 @@ interface PaletteItem {
 
 export function CommandPalette() {
   const router = useRouter()
-  const { resolved } = useTheme()
-  const isDark = resolved === "dark"
 
   const [open, setOpen] = useState(false)
   const [query, setQuery] = useState("")
@@ -21,24 +18,22 @@ export function CommandPalette() {
   const inputRef = useRef<HTMLInputElement>(null)
   const [items, setItems] = useState<PaletteItem[]>([])
 
-  // Colors that adapt to theme
+  // Colors all via CSS variables — auto-swap under html.dark, no JS theme check needed
   const c = {
     overlayBg: "rgba(0,0,0,0.45)",
-    dialogBg: isDark ? "#161310" : "#fdf9f0",
-    dialogBorder: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.08)",
-    dialogShadow: isDark
-      ? "0 24px 48px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.05)"
-      : "0 16px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06)",
-    prompt: isDark ? "#f0b848" : "#b8620e",
-    inputFg: isDark ? "#ede0d0" : "#4a3d2e",
-    inputPlaceholder: isDark ? "#a09585" : "#9e8e7a",
-    itemFg: isDark ? "#a09585" : "#8a7c66",
-    itemHoverBg: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.04)",
-    itemHoverFg: isDark ? "#ede0d0" : "#4a3d2e",
-    itemHref: isDark ? "rgba(255,255,255,0.35)" : "rgba(0,0,0,0.35)",
-    thinBorder: isDark ? "rgba(255,255,255,0.06)" : "rgba(0,0,0,0.06)",
-    kbBg: isDark ? "rgba(255,255,255,0.08)" : "rgba(0,0,0,0.06)",
-    noResults: isDark ? "#a09585" : "#9e8e7a",
+    dialogBg: "var(--color-paper)",
+    dialogBorder: "var(--color-border)",
+    dialogShadow: "0 16px 40px rgba(0,0,0,0.12), 0 0 0 1px rgba(0,0,0,0.06)",
+    prompt: "var(--color-accent)",
+    inputFg: "var(--color-ink)",
+    inputPlaceholder: "var(--color-ink-faint)",
+    itemFg: "var(--color-ink-subtle)",
+    itemHoverBg: "var(--color-surface)",
+    itemHoverFg: "var(--color-ink)",
+    itemHref: "var(--color-ink-faint)",
+    thinBorder: "var(--color-border)",
+    kbBg: "var(--color-surface)",
+    noResults: "var(--color-ink-faint)",
   }
 
   const staticItems: PaletteItem[] = [
