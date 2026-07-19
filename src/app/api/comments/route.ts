@@ -1,26 +1,25 @@
 import { NextRequest, NextResponse } from "next/server"
 import { getSql, initSchema } from "@/lib/db"
 
-// DELETE: 删除评论（需密码验证）
+// DELETE: 删除评论（需密码验证，密码通过请求 body 传递）
 async function DELETE(request: NextRequest) {
   await initSchema()
   const sql = getSql()
 
-  const { searchParams } = new URL(request.url)
-  const id = searchParams.get("id")
-  const pwd = searchParams.get("pwd")
+  const body = await request.json().catch(() => ({}))
+  const id = body.id as number | undefined
+  const pwd = body.pwd as string | undefined
 
   if (!id) {
     return NextResponse.json({ error: "缺少 id" }, { status: 400 })
   }
 
-  // 简单密码保护
   const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD
   if (!ADMIN_PASSWORD || pwd !== ADMIN_PASSWORD) {
     return NextResponse.json({ error: "密码错误" }, { status: 403 })
   }
 
-  await sql`DELETE FROM comments WHERE id = ${parseInt(id)}`
+  await sql`DELETE FROM comments WHERE id = ${id}`
   return NextResponse.json({ ok: true })
 }
 
