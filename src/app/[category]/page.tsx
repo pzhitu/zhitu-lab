@@ -21,7 +21,7 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
   const labels = CATEGORY_LABELS[category]
   if (!labels) return {}
   return {
-    title: `${labels.title} — Zhitu Space`,
+    title: labels.title,
     description: labels.description,
     alternates: {
       canonical: `https://zhi-tu.me/${category}`,

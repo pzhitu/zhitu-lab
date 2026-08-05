@@ -3,7 +3,7 @@ import Link from "next/link"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "分类 — Zhitu Space",
+  title: "分类",
   description: "按分类浏览所有卡片。",
   alternates: { canonical: "https://zhi-tu.me/categories" },
 }

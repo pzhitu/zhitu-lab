@@ -8,7 +8,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 **Zhitu Space** — a personal blog for 知途 (a Chinese engineering graduate student). The site uses a "research room" metaphor: CLI terminal navigation bar, handwritten index cards for article previews, library card catalog for categories, and clean paper for reading.
 
-- **Stack**: Next.js 16.2 (App Router) + TypeScript + Tailwind CSS v4 + MDX + Neon Postgres
+- **Stack**: Next.js 16.2 (App Router) + TypeScript + Tailwind CSS v4 + MDX
 - **Deployed on**: Vercel (via GitHub `pzhitu/zhitu-lab`)
 - **Fonts**: Noto Serif SC (body/serif), JetBrains Mono (code/mono) — loaded from Google Fonts in root layout
 
@@ -76,14 +76,13 @@ Categories: `projects`, `papers`, `debugging`, `interests`, `moments`. Defined i
 /archive                       → archive/page.tsx (Server, year-grouped)
 /tags                          → tags/page.tsx (Server, filterable by ?tag=)
 /about                         → about/page.tsx (Server, static content)
-/api/comments                  → api/comments/route.ts (GET/POST/DELETE)
 /api/search                    → api/search/route.ts (GET, returns all post metadata)
 ```
 
 ## Server vs Client Components
 
 - **All pages** (`page.tsx`) are Server Components by default — they can use `fs`, `async`, and fetch data directly
-- **Client Components**: `desk.tsx`, `post-card.tsx`, `nav.tsx`, `status-bar.tsx`, `command-palette.tsx`, `comments.tsx`, `theme-provider.tsx`, `theme-toggle.tsx`, `lamp-toggle.tsx`, `footer.tsx`, `tag-cloud.tsx`
+- **Client Components**: `desk.tsx`, `post-card.tsx`, `nav.tsx`, `status-bar.tsx`, `command-palette.tsx`, `theme-provider.tsx`, `lamp-toggle.tsx`, `footer.tsx`
 - **`mdx-content.tsx`**: MUST be a Server Component — `MDXRemote` from `next-mdx-remote/rsc` is an async Server Component and cannot have `'use client'`
 
 In Next.js 16, `params` and `searchParams` are **Promises** — always `await` them:
@@ -95,16 +94,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 }
 ```
 
-## Comments (src/lib/db.ts + src/app/api/comments/route.ts)
-
-Neon Postgres (serverless). Schema: `comments(id, slug, parent_id, nickname, email, content, approved, created_at)`. Nested replies assembled in the API route via a simple recursive map. `DATABASE_URL` environment variable required.
-
-- POST requires: `slug`, `nickname`, `content`; optional: `parent_id`, `email`
-- DELETE requires `id` and `pwd` matching `ADMIN_PASSWORD` env var
-
 ## The "reset" bit
 
-No i18n (single-language Chinese), no Giscus, no RSS yet — these were in the original plan but not implemented. The site is currently database-free except for comments.
+No i18n (single-language Chinese), no Giscus, no RSS yet — these were in the original plan but not implemented. The site is fully static and database-free.
 
 ## User preferences (important)
 

@@ -16,7 +16,6 @@ export function StatusBar() {
   const barBorder = "var(--color-terminal-border)"
   const kbBg = "var(--color-surface)"
   const kbBorder = "var(--color-border)"
-  const accent = "var(--color-accent)"
 
   const links: StatusLink[] = [
     { key: "H", label: "主页", href: "/" },
@@ -56,19 +55,6 @@ export function StatusBar() {
               <span>{label}</span>
             </Link>
           ))}
-        </div>
-
-        <div className="flex items-center gap-3 ml-auto" style={{ fontSize: "11px" }}>
-          <a
-            href="/rss.xml"
-            className="flex items-center gap-1 transition-colors"
-            style={{ color: barFg }}
-            onMouseEnter={(e) => { e.currentTarget.style.color = barFgHover }}
-            onMouseLeave={(e) => { e.currentTarget.style.color = barFg }}
-          >
-            <span className="w-1.5 h-1.5 rounded-full" style={{ background: accent }} />
-            <span>新卡提醒</span>
-          </a>
         </div>
       </div>
     </div>

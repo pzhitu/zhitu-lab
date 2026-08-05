@@ -3,7 +3,6 @@ import { MDXContent } from "@/components/mdx-content"
 import { notFound } from "next/navigation"
 import { formatDateFull } from "@/lib/utils"
 import Link from "next/link"
-import Comments from "@/components/comments"
 import type { Metadata } from "next"
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -27,7 +26,7 @@ export async function generateMetadata({ params }: { params: Promise<{ category:
 
   const { title, titleEn, description, descriptionEn, tags, tagsEn } = post.frontmatter
   return {
-    title: `${title}${titleEn ? ` (${titleEn})` : ""} — Zhitu Space`,
+    title: `${title}${titleEn ? ` (${titleEn})` : ""}`,
     description: descriptionEn ? `${description} | ${descriptionEn}` : description,
     keywords: [...tags, ...(tagsEn || [])],
     openGraph: {
@@ -118,20 +117,6 @@ export default async function PostPage({ params }: { params: Promise<{ category:
               ← 回到书桌
             </Link>
           </div>
-        </div>
-      </div>
-
-      {/* ── Comments ── */}
-      <div className="mt-16 mx-auto max-w-[40rem]">
-        <h3
-          className="text-xs font-semibold uppercase tracking-wider mb-4 flex items-center gap-2"
-          style={{ fontFamily: "var(--font-mono)", color: "var(--color-ink-subtle)" }}
-        >
-          <span className="w-1.5 h-1.5 rounded-full" style={{ background: "var(--color-terminal-accent)" }} />
-          翻阅留言
-        </h3>
-        <div className="library-card">
-          <Comments slug={`${category}/${slug}`} />
         </div>
       </div>
     </article>

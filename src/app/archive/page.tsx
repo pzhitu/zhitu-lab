@@ -3,7 +3,7 @@ import { PostCard } from "@/components/post-card"
 import type { Metadata } from "next"
 
 export const metadata: Metadata = {
-  title: "归档 — Zhitu Space",
+  title: "归档",
   description: "所有卡片，按年份排列。",
   alternates: { canonical: "https://zhi-tu.me/archive" },
 }

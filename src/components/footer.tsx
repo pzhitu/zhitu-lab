@@ -7,10 +7,6 @@ export function Footer() {
             <span style={{ fontFamily: "var(--font-serif)", fontStyle: "italic" }}>Zhitu Space</span>
           </p>
           <div className="flex items-center gap-3">
-            <a href="/rss.xml" className="hover:text-accent dark:hover:text-accent-light transition-colors">
-              新卡提醒
-            </a>
-            <span className="opacity-30">·</span>
             <a href="https://github.com/pzhitu" target="_blank" rel="noopener noreferrer" className="hover:text-accent dark:hover:text-accent-light transition-colors">
               GitHub
             </a>
