@@ -5,7 +5,6 @@ const http = require('http');
 const grayMatter = require('gray-matter');
 const { THEMES, DEFAULT_THEME, mergeTheme } = require('./lib/themes');
 const { renderMarkdown } = require('./lib/renderer');
-const iconGen = require('./lib/icon');
 
 const ROOT = __dirname;
 const CONTENT_POSTS = path.join(ROOT, 'content', 'posts');
@@ -19,8 +18,8 @@ const SITE_NAME = '知途的研习室';
 const SITE_DESC = '知途的个人知识库：知途以明向，格物以致知。';
 // 构建时间戳：给静态资源加 ?v= 缓存破坏，避免浏览器/SW 用旧缓存
 const BUILD_STAMP = Date.now();
-// 站点 Logo：蜿蜒小径 + 沿路前行的人 + 终点光点（绿色渐变底 + 白色路径 + 深绿人物 + 琥珀光点）
-const LOGO_SVG = '<svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><defs><linearGradient id="zhitu-logo-bg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3ad49a"/><stop offset="1" stop-color="#0a7f49"/></linearGradient></defs><rect x="24" y="24" width="464" height="464" rx="112" fill="url(#zhitu-logo-bg)"/><path d="M120 392 C190 396 216 360 216 316 C216 272 168 256 176 216 C182 184 226 170 262 158 C316 140 356 118 392 100" fill="none" stroke="#ffffff" stroke-width="40" stroke-linecap="round"/><g stroke="#0b5d33" stroke-width="16" stroke-linecap="round" fill="none"><path d="M349.6 76.6L324.2 130.9"/><path d="M343.2 90.2L354.3 118.5"/><path d="M343.2 90.2L318.8 95.3"/><path d="M324.2 130.9L332.9 154.9"/><path d="M324.2 130.9L304.9 144.0"/></g><circle cx="360.2" cy="53.9" r="24" fill="#0b5d33"/><circle cx="414" cy="82" r="34" fill="#ffb347"/></svg>';
+// 站点 Logo：印章「知」（朱砂红印 + 纸底，白文「知」字；资源由 tools/generate-icons.py 生成）
+const LOGO_SVG = fs.readFileSync(path.join(SITE_DIR, 'icons', 'logo-inline.svg'), 'utf-8').trim();
 
 /* ---------- 工具 ---------- */
 function escapeHtml(s) {
@@ -556,11 +555,12 @@ content: block,
   };
   writeFile('assets/site-meta.js', `window.PHYCAT_SITE_META = ${JSON.stringify(meta)};\n`);
 
-  // PWA：图标 / manifest / service worker
+  // PWA：图标（预渲染资源，由 tools/generate-icons.py 生成） / manifest / service worker
   fs.mkdirSync(path.join(DIST, 'assets', 'icons'), { recursive: true });
-  fs.writeFileSync(path.join(DIST, 'assets', 'icons', 'icon-192.png'), iconGen.generatePng(192));
-  fs.writeFileSync(path.join(DIST, 'assets', 'icons', 'icon-512.png'), iconGen.generatePng(512));
-  fs.writeFileSync(path.join(DIST, 'assets', 'icons', 'icon.svg'), iconGen.generateSvg());
+  for (const f of ['icon-192.png', 'icon-512.png', 'icon.svg']) {
+    const src = path.join(SITE_DIR, 'icons', f);
+    if (fs.existsSync(src)) fs.copyFileSync(src, path.join(DIST, 'assets', 'icons', f));
+  }
   for (const f of ['sw.js', 'manifest.webmanifest']) {
     if (fs.existsSync(path.join(SITE_DIR, f))) {
       if (f === 'sw.js') {

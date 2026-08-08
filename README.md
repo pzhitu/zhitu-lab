@@ -72,14 +72,17 @@ zhitu-lab/
 ├── lib/
 │   ├── renderer.js       # markdown-it 渲染管线（输出 Typora 兼容 DOM）
 │   ├── themes.js         # 主题清单与「引擎+配色」合并逻辑
-│   └── icon.js           # Logo 图标生成（蜿蜒小径 + 终点光点，纯 Node）
+│   └── themes.js         # 主题清单与「引擎+配色」合并逻辑
+├── tools/
+│   └── generate-icons.py  # 印章「知」Logo 资源生成脚本（SVG + PNG）
 ├── templates/
 │   └── layout.html       # 页面骨架模板
 ├── site/
 │   ├── site.css          # 站点外壳样式
 │   ├── app.js            # 主题切换 / 搜索 / 目录 / 灯箱 / PWA
 │   ├── studio.js         # 在线配色工坊
-│   └── sw.js             # Service Worker
+│   ├── sw.js             # Service Worker
+│   └── icons/            # 印章「知」Logo 预渲染资源（PNG/SVG）
 ├── phycat/               # Phycat 原始资源（引擎 CSS + 配色 CSS + 字体）
 ├── content/
 │   ├── posts/            # 文章（.md），图片放 images/<文档名>/
