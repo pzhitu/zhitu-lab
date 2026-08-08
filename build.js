@@ -17,6 +17,7 @@ const DIST = path.join(ROOT, 'dist');
 
 const SITE_NAME = '知途的研习室';
 const SITE_DESC = '知途的个人知识库：知途以明向，格物以致知。';
+const SITE_URL = 'https://zhi-tu.me';
 // 构建时间戳：给静态资源加 ?v= 缓存破坏，避免浏览器/SW 用旧缓存
 const BUILD_STAMP = Date.now();
 // 站点 Logo：印章「知」（朱砂红印 + 纸底，白文「知」字；资源由 tools/generate-icons.py 生成）
@@ -405,6 +406,30 @@ function archiveContent(posts, cats, tags) {
 }
 
 
+
+/* ---------- SEO：JSON-LD ---------- */
+function siteJsonLd() {
+  return '<script type="application/ld+json">' + JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: SITE_NAME,
+    url: SITE_URL + '/',
+    description: SITE_DESC,
+  }) + '</script>';
+}
+function postJsonLd(p) {
+  return '<script type="application/ld+json">' + JSON.stringify({
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    headline: p.title,
+    description: p.excerpt || p.title,
+    datePublished: p.dateText,
+    dateModified: p.updatedText || p.dateText,
+    author: { '@type': 'Person', name: '知途' },
+    url: SITE_URL + '/posts/' + p.slug + '.html',
+    image: SITE_URL + '/assets/og-image.png',
+  }) + '</script>';
+}
 function notFoundContent() {
   return `<main class="site-main"><div class="notfound">
     <h1 class="nf-code">404</h1>
@@ -523,6 +548,11 @@ content: block,
         defaultTheme: DEFAULT_THEME,
         activeNav: extra.activeNav || '',
         termPath: extra.termPath || '~',
+        canonical: extra.canonical || (SITE_URL + '/' + (extra.pagePath || '')),
+        ogType: extra.ogType || (extra.pagePath && extra.pagePath.indexOf('posts/') === 0 ? 'article' : 'website'),
+        ogImage: SITE_URL + '/assets/og-image.png',
+        jsonld: extra.jsonld || '',
+        noindex: extra.noindex || '',
       },
       extra
     );
@@ -530,13 +560,13 @@ content: block,
   }
 
   // 首页
-  writeFile('index.html', renderPage(homeContent(posts, cats, tags), '', { title: '首页', activeNav: 'home', termPath: '~' }));
+  writeFile('index.html', renderPage(homeContent(posts, cats, tags), '', { title: '首页', activeNav: 'home', termPath: '~', pagePath: '', jsonld: siteJsonLd() }));
 
   // 分类页
   for (const c of cats) {
     writeFile(
       `category/${c.slug}.html`,
-      renderPage(categoryContent(posts, c), '../', { title: c.name, desc: `分类：${c.name}`, activeNav: 'categories', termPath: '~/分类/' + c.name })
+      renderPage(categoryContent(posts, c), '../', { title: c.name, desc: `分类：${c.name}`, activeNav: 'categories', termPath: '~/分类/' + c.name, pagePath: `category/${c.slug}.html` })
     );
   }
 
@@ -544,12 +574,12 @@ content: block,
   for (const t of tags) {
     writeFile(
       `tag/${t.slug}.html`,
-      renderPage(tagContent(posts, t), '../', { title: `#${t.name}`, desc: `标签：${t.name}`, activeNav: 'tags', termPath: '~/索引/' + t.name })
+      renderPage(tagContent(posts, t), '../', { title: `#${t.name}`, desc: `标签：${t.name}`, activeNav: 'tags', termPath: '~/索引/' + t.name, pagePath: `tag/${t.slug}.html` })
     );
   }
-  writeFile('tags.html', renderPage(tagsContent(tags), '', { title: '标签', activeNav: 'tags', termPath: '~/索引' }));
-  writeFile('categories.html', renderPage(categoriesContent(cats, posts), '', { title: '笔记分类', activeNav: 'categories', termPath: '~/分类' }));
-  writeFile('archive.html', renderPage(archiveContent(posts, cats, tags), '', { title: '文章汇总', activeNav: 'archive', termPath: '~/归档' }));
+  writeFile('tags.html', renderPage(tagsContent(tags), '', { title: '标签', activeNav: 'tags', termPath: '~/索引', pagePath: 'tags.html' }));
+  writeFile('categories.html', renderPage(categoriesContent(cats, posts), '', { title: '笔记分类', activeNav: 'categories', termPath: '~/分类', pagePath: 'categories.html' }));
+  writeFile('archive.html', renderPage(archiveContent(posts, cats, tags), '', { title: '文章汇总', activeNav: 'archive', termPath: '~/归档', pagePath: 'archive.html' }));
 
   // 文章页
   posts.forEach((pp, idx) => {
@@ -560,6 +590,7 @@ content: block,
           desc: pp.excerpt || pp.title,
             activeNav: 'categories',
             termPath: '~/文章/' + pp.title,
+            pagePath: `posts/${pp.slug}.html`, jsonld: postJsonLd(pp),
         })
       );
   });
@@ -567,8 +598,26 @@ content: block,
   // 独立页面
   for (const p of pages) {
   // 404 页面（Nginx error_page 可指向 /404.html）
-  writeFile('404.html', renderPage(notFoundContent(), '', { title: '页面不存在', desc: '页面不存在', termPath: '~/404' }));
-    writeFile(`${p.slug}.html`, renderPage(pageContent(p), '', { title: p.title, activeNav: `page-${p.slug}`, termPath: '~/' + p.title }));
+  writeFile('404.html', renderPage(notFoundContent(), '', { title: '页面不存在', desc: '页面不存在', termPath: '~/404', pagePath: '404.html', noindex: '<meta name="robots" content="noindex">' }));
+  // SEO：sitemap.xml / robots.txt
+  const postDates = posts.map((p) => p.updatedText || p.dateText).filter(Boolean);
+  const latestDate = postDates.sort().slice(-1)[0] || new Date().toISOString().split('T')[0];
+  const smapUrls = [
+    { path: '', lastmod: latestDate },
+    { path: 'categories.html', lastmod: latestDate },
+    { path: 'archive.html', lastmod: latestDate },
+    { path: 'tags.html', lastmod: latestDate },
+    { path: 'about.html', lastmod: latestDate },
+    ...cats.map((c) => ({ path: `category/${c.slug}.html`, lastmod: latestDate })),
+    ...tags.map((t2) => ({ path: `tag/${t2.slug}.html`, lastmod: latestDate })),
+    ...posts.map((pp) => ({ path: `posts/${pp.slug}.html`, lastmod: pp.updatedText || pp.dateText })),
+  ];
+  const sitemap = '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n' +
+    smapUrls.map((u) => `  <url><loc>${SITE_URL}/${u.path}</loc><lastmod>${u.lastmod}</lastmod></url>`).join('\n') +
+    '\n</urlset>\n';
+  writeFile('sitemap.xml', sitemap);
+  writeFile('robots.txt', `User-agent: *\nAllow: /\n\nSitemap: ${SITE_URL}/sitemap.xml\n`);
+    writeFile(`${p.slug}.html`, renderPage(pageContent(p), '', { title: p.title, activeNav: `page-${p.slug}`, termPath: '~/' + p.title, pagePath: `${p.slug}.html` }));
   }
 
   // 文章附属资源：把 content/posts 下除 .md 外的一切（如 images/<文档名>/）复制到 dist/posts/，保持相对路径
@@ -591,7 +640,7 @@ content: block,
   }
 
   // 站点资源
-  for (const f of ['site.css', 'app.js', 'studio.css', 'studio.js', 'favicon.svg', 'mermaid.min.js']) {
+  for (const f of ['site.css', 'app.js', 'studio.css', 'studio.js', 'favicon.svg', 'mermaid.min.js', 'og-image.png']) {
     if (fs.existsSync(path.join(SITE_DIR, f))) {
       fs.copyFileSync(path.join(SITE_DIR, f), path.join(DIST, 'assets', f));
     }
