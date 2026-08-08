@@ -1527,3 +1527,5 @@ kbd { font-family: CascadiaCode, Consolas, monospace; }
   .desk-grid { grid-template-columns: 1fr; gap: 30px; }
   .desk-wrap { padding: 18px 14px 50px; }
 }
+/* 锚点定位避开粘性终端栏 */
+#desk { scroll-margin-top: 56px; }
