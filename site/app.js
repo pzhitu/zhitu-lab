@@ -557,6 +557,10 @@
   function initLightbox() {
     var write = document.querySelector('#write');
     if (!write) return;
+    // 正文图片懒加载（灯箱打开时才真正加载到视口附近）
+    Array.prototype.forEach.call(write.querySelectorAll('img'), function (im) {
+      if (!im.hasAttribute('loading')) im.loading = 'lazy';
+    });
     var overlay = null, imgEl = null, viewport = null, label = null;
     var zoom = 1, tx = 0, ty = 0;
     var dragging = false, startX = 0, startY = 0, origTx = 0, origTy = 0;
