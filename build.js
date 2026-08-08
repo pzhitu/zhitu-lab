@@ -262,7 +262,7 @@ function homeContent(posts, cats, tags) {
     </div>`;
   // 拾光·短笺
   const moments = posts.filter((p) => p.categorySlug === '拾光').slice(0, 3);
-  const momentsHtml = moments.map((m) => momentNote(m)).join('\n');
+  const momentsHtml = moments.map((m, i) => momentNote(m, i)).join('\n');
 
   return `<main class="site-main"><div class="desk-wrap">
     ${hero}
@@ -313,8 +313,9 @@ function drawer(c) {
 }
 
 /* 拾光短笺 */
-function momentNote(m) {
-  return `<a class="moment-note" href="posts/${m.slug}.html">
+function momentNote(m, i) {
+  const v = ['note-a', 'note-b', 'note-c', 'note-d'][i % 4];
+  return `<a class="moment-note ${v}" href="posts/${m.slug}.html">
     <time>${m.dateText}</time>
     <p class="moment-text">${escapeHtml(m.excerpt || m.title)}</p>
   </a>`;

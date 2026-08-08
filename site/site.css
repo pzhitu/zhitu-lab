@@ -1505,13 +1505,17 @@ kbd { font-family: CascadiaCode, Consolas, monospace; }
   flex-direction: column;
   gap: 6px;
   text-decoration: none;
-  background: var(--note-b, var(--card-bg));
+  background: var(--note-a, var(--card-bg));
   border: 1px solid var(--site-border);
   border-radius: 8px;
   padding: 14px 16px;
   transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
 }
 .moment-note:hover { transform: translateY(-2px); border-color: var(--site-accent); box-shadow: var(--site-shadow); }
+.moment-note.note-a { background: var(--note-a, var(--card-bg)); }
+.moment-note.note-b { background: var(--note-b, var(--card-bg)); }
+.moment-note.note-c { background: var(--note-c, var(--card-bg)); }
+.moment-note.note-d { background: var(--note-d, var(--card-bg)); }
 .moment-note time { font-family: CascadiaCode, Consolas, monospace; font-size: .68rem; color: var(--site-muted); }
 .moment-text { margin: 0; font-size: .86rem; color: var(--site-text); line-height: 1.7; }
 
