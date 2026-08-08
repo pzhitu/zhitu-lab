@@ -362,6 +362,15 @@ function archiveContent(posts, cats, tags) {
   </div></main>`;
 }
 
+
+function notFoundContent() {
+  return `<main class="site-main"><div class="notfound">
+    <h1 class="nf-code">404</h1>
+    <p class="nf-title">页面不存在</p>
+    <p class="nf-desc">这个页面还没有被创建——也许未来会有的。</p>
+    <a class="btn btn-primary" href="index.html">← 回到书桌</a>
+  </div></main>`;
+}
 function postCard(p, root) {
   const tags = (p.tags || [])
     .map((t) => `<a class="tag" href="${root}tag/${slugify(t)}.html">#${escapeHtml(t)}</a>`)
@@ -471,6 +480,7 @@ content: block,
         root,
         defaultTheme: DEFAULT_THEME,
         activeNav: extra.activeNav || '',
+        termPath: extra.termPath || '~',
       },
       extra
     );
@@ -478,13 +488,13 @@ content: block,
   }
 
   // 首页
-  writeFile('index.html', renderPage(homeContent(posts, cats, tags), '', { title: '首页', activeNav: 'home' }));
+  writeFile('index.html', renderPage(homeContent(posts, cats, tags), '', { title: '首页', activeNav: 'home', termPath: '~' }));
 
   // 分类页
   for (const c of cats) {
     writeFile(
       `category/${c.slug}.html`,
-      renderPage(categoryContent(posts, c), '../', { title: c.name, desc: `分类：${c.name}`, activeNav: 'categories' })
+      renderPage(categoryContent(posts, c), '../', { title: c.name, desc: `分类：${c.name}`, activeNav: 'categories', termPath: '~/分类/' + c.name })
     );
   }
 
@@ -492,12 +502,12 @@ content: block,
   for (const t of tags) {
     writeFile(
       `tag/${t.slug}.html`,
-      renderPage(tagContent(posts, t), '../', { title: `#${t.name}`, desc: `标签：${t.name}`, activeNav: 'tags' })
+      renderPage(tagContent(posts, t), '../', { title: `#${t.name}`, desc: `标签：${t.name}`, activeNav: 'tags', termPath: '~/索引/' + t.name })
     );
   }
-  writeFile('tags.html', renderPage(tagsContent(tags), '', { title: '标签', activeNav: 'tags' }));
-  writeFile('categories.html', renderPage(categoriesContent(cats, posts), '', { title: '笔记分类', activeNav: 'categories' }));
-  writeFile('archive.html', renderPage(archiveContent(posts, cats, tags), '', { title: '文章汇总', activeNav: 'archive' }));
+  writeFile('tags.html', renderPage(tagsContent(tags), '', { title: '标签', activeNav: 'tags', termPath: '~/索引' }));
+  writeFile('categories.html', renderPage(categoriesContent(cats, posts), '', { title: '笔记分类', activeNav: 'categories', termPath: '~/分类' }));
+  writeFile('archive.html', renderPage(archiveContent(posts, cats, tags), '', { title: '文章汇总', activeNav: 'archive', termPath: '~/归档' }));
 
   // 文章页
   posts.forEach((pp, idx) => {
@@ -506,14 +516,17 @@ content: block,
         renderPage(postContent(pp, posts[idx + 1] || null, posts[idx - 1] || null), '../', {
           title: pp.title,
           desc: pp.excerpt || pp.title,
-          activeNav: 'categories',
+            activeNav: 'categories',
+            termPath: '~/文章/' + pp.title,
         })
       );
   });
 
   // 独立页面
   for (const p of pages) {
-    writeFile(`${p.slug}.html`, renderPage(pageContent(p), '', { title: p.title, activeNav: `page-${p.slug}` }));
+  // 404 页面（Nginx error_page 可指向 /404.html）
+  writeFile('404.html', renderPage(notFoundContent(), '', { title: '页面不存在', desc: '页面不存在', termPath: '~/404' }));
+    writeFile(`${p.slug}.html`, renderPage(pageContent(p), '', { title: p.title, activeNav: `page-${p.slug}`, termPath: '~/' + p.title }));
   }
 
   // 文章附属资源：把 content/posts 下除 .md 外的一切（如 images/<文档名>/）复制到 dist/posts/，保持相对路径
@@ -553,6 +566,15 @@ content: block,
     siteName: SITE_NAME,
     defaultTheme: DEFAULT_THEME,
     themes: THEMES.map((t) => ({ id: t.id, name: t.name, series: t.series, accent: t.accent })),
+    // 命令面板静态导航项（href 为相对路径，运行时拼接 data-root）
+    nav: [
+      { label: '首页', href: 'index.html' },
+      { label: '笔记分类', href: 'categories.html' },
+      { label: '文章汇总', href: 'archive.html' },
+      { label: '索引', href: 'tags.html' },
+      { label: '关于', href: 'about.html' },
+    ],
+    categories: cats.map((c) => ({ label: c.name, href: 'category/' + c.slug + '.html' })),
   };
   writeFile('assets/site-meta.js', `window.PHYCAT_SITE_META = ${JSON.stringify(meta)};\n`);
 

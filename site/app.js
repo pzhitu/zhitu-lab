@@ -61,8 +61,39 @@
       opts[j].classList.toggle('active', opts[j].getAttribute('data-theme') === id);
     }
     document.body.setAttribute('data-theme-series', theme ? theme.series : 'color');
+    updateLamp();
   }
 
+
+  /* ---------- 掌灯 / 熄灯：亮暗主题一键切换 ---------- */
+  function currentSeries() {
+    var custom = null;
+    try { custom = JSON.parse(localStorage.getItem('phycat-custom-theme') || 'null'); } catch (e) {}
+    if (custom && custom.mode) return custom.mode === 'dark' ? 'neon' : 'color';
+    var th = findTheme(getSavedTheme());
+    return th ? th.series : 'color';
+  }
+  function updateLamp() {
+    var label = document.getElementById('lampLabel');
+    if (!label) return;
+    var dark = currentSeries() === 'neon';
+    var text = dark ? '掌灯' : '熄灯';
+    label.textContent = text;
+    var btn = document.getElementById('lampBtn');
+    if (btn) {
+      btn.title = dark ? '掌灯（切换亮色主题）' : '熄灯（切换暗色主题）';
+      btn.setAttribute('aria-label', text);
+    }
+  }
+  function initLamp() {
+    var btn = document.getElementById('lampBtn');
+    if (!btn) return;
+    btn.addEventListener('click', function () {
+      if (window.PhycatStudio) window.PhycatStudio.clearCustom();
+      applyTheme(currentSeries() === 'neon' ? 'forest' : 'vampire');
+    });
+    updateLamp();
+  }
   function initThemeSwitcher() {
     var btn = document.getElementById('themeBtn');
     var panel = document.getElementById('themePanel');
@@ -314,6 +345,20 @@
     var loading = false;
     var timer = null;
     var selected = -1;
+    var STATIC = null;
+
+    // 命令面板静态项：导航页面 + 分类（来自 site-meta.js）
+    function buildStatic() {
+      if (STATIC) return;
+      STATIC = [];
+      var r = (document.body && document.body.getAttribute('data-root')) || '';
+      (META.nav || []).forEach(function (n) {
+        STATIC.push({ kind: 'nav', label: n.label, href: r + n.href, icon: '▸' });
+      });
+      (META.categories || []).forEach(function (c) {
+        STATIC.push({ kind: 'category', label: c.label, href: r + c.href, icon: '📂' });
+      });
+    }
 
     function esc(s) {
       return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
@@ -417,6 +462,13 @@
       }
       selected = -1;
       results.innerHTML = list.map(function (r, idx) {
+        if (r.static) {
+          var s = r.static;
+          return '<a class="search-item search-static" href="' + esc(s.href) + '">' +
+            '<span class="ss-icon">' + s.icon + '</span>' +
+            '<span class="ss-label">' + esc(s.label) + '</span>' +
+            '<span class="ss-href">' + esc(s.href) + '</span></a>';
+        }
         var meta = '<time>' + esc(r.item.d) + '</time>' +
           '<span class="badge">' + esc(r.item.c) + '</span>' +
           (r.item.g || []).map(function (t) { return '<span class="tag">#' + esc(t) + '</span>'; }).join('') +
@@ -430,8 +482,20 @@
     function runSearch() {
       var q = input.value.trim();
       if (hint) hint.textContent = q ? '' : '支持标题 / 正文 / 分类 / 标签搜索';
-      if (!q) { results.innerHTML = ''; selected = -1; return; }
-      render(search(q));
+      buildStatic();
+      var list = [];
+      if (!q) {
+        list = STATIC.slice();
+      } else {
+        var ql = q.toLowerCase();
+        for (var i = 0; i < STATIC.length; i++) {
+          if (STATIC[i].label.toLowerCase().indexOf(ql) >= 0) {
+            list.push({ static: STATIC[i], score: 0, tokens: [] });
+          }
+        }
+        list = list.concat(search(q));
+      }
+      render(list);
     }
     function setSelected(n) {
       var items = results.querySelectorAll('.search-item');
@@ -669,6 +733,7 @@
   /* ---------- 启动 ---------- */
   document.addEventListener('DOMContentLoaded', function () {
     initThemeSwitcher();
+    initLamp();
     initMermaid();
     initOutline();
     initBackTop();
