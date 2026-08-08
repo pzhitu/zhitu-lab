@@ -1529,15 +1529,15 @@ kbd { font-family: CascadiaCode, Consolas, monospace; }
 
 /* 便签四色（随主题自适应） */
 :root {
-  /* 便签八色：以主题色为基准，色环每 45° 衍生（HSL 色相旋转 + 纸底混合，随主题自适应） */
-  --note-a: color-mix(in srgb, var(--site-accent) 13%, var(--card-bg, #fff));
-  --note-b: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 45) s l) 13%, var(--card-bg, #fff));
-  --note-c: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 90) s l) 13%, var(--card-bg, #fff));
-  --note-d: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 135) s l) 13%, var(--card-bg, #fff));
-  --note-e: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 180) s l) 13%, var(--card-bg, #fff));
-  --note-f: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 225) s l) 13%, var(--card-bg, #fff));
-  --note-g: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 270) s l) 13%, var(--card-bg, #fff));
-  --note-h: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 315) s l) 13%, var(--card-bg, #fff));
+  /* 便签八色：主题色同一色相的浓度阶梯（6%→34% 与纸底混合，随主题自适应，不跑偏） */
+  --note-a: color-mix(in srgb, var(--site-accent) 6%, var(--card-bg, #fff));
+  --note-b: color-mix(in srgb, var(--site-accent) 9%, var(--card-bg, #fff));
+  --note-c: color-mix(in srgb, var(--site-accent) 12%, var(--card-bg, #fff));
+  --note-d: color-mix(in srgb, var(--site-accent) 15%, var(--card-bg, #fff));
+  --note-e: color-mix(in srgb, var(--site-accent) 19%, var(--card-bg, #fff));
+  --note-f: color-mix(in srgb, var(--site-accent) 23%, var(--card-bg, #fff));
+  --note-g: color-mix(in srgb, var(--site-accent) 28%, var(--card-bg, #fff));
+  --note-h: color-mix(in srgb, var(--site-accent) 34%, var(--card-bg, #fff));
 }
 
 @media (max-width: 900px) {
