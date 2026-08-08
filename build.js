@@ -228,6 +228,7 @@ function homeContent(posts, cats, tags) {
     return t > m ? t : m;
   }, 0);
   const updatedText = latestMs > 0 ? formatDate(new Date(latestMs)) : '';
+
   const hero = `
   <section class="home-hero">
     <div class="home-avatar" aria-hidden="true">${LOGO_SVG}</div>
@@ -242,40 +243,81 @@ function homeContent(posts, cats, tags) {
       ${updatedText ? `<span>🕒 最近更新 ${updatedText}</span>` : ''}
     </div>
     <div class="home-cta">
-      <a class="btn btn-primary" href="#latest">↓ 开始阅读</a>
+      <a class="btn btn-primary" href="#desk">↓ 开始阅读</a>
       <a class="btn" href="about.html">关于我</a>
     </div>
   </section>`;
-  const catCards = `<section class="home-section">
-    <h2 class="home-section-title">🗂 分类</h2>
-    <div class="cat-cards">
-      ${cats.map((c) => `
-        <a class="cat-card" href="category/${c.slug}.html">
-          <span class="cat-name">${escapeHtml(c.name)}</span>
-          <span class="cat-count">${c.count} 篇</span>
-          <span class="cat-arrow">→</span>
-        </a>`).join('\n')}
-    </div>
-  </section>`;
-  const tagCloud = `<section class="home-section">
-    <h2 class="home-section-title">🏷 标签</h2>
-    <div class="tag-cloud">
+
+  // 书桌：最近写下的卡片（四色索引卡轮换）
+  const cards = posts.slice(0, 6).map((p, i) => deskCard(p, i)).join('\n');
+  // 分类抽屉
+  const drawers = cats.map((c) => drawer(c)).join('\n');
+  // 索引词（标签云）
+  const tagCloud = `<div class="tag-cloud">
       ${tags.map((t) => {
         const tier = t.count >= 3 ? 's3' : t.count === 2 ? 's2' : 's1';
         return `<a class="tag-chip ${tier}" href="tag/${t.slug}.html"><span class="tag">#${escapeHtml(t.name)}</span><em>${t.count}</em></a>`;
       }).join('\n')}
+    </div>`;
+  // 拾光·短笺
+  const moments = posts.filter((p) => p.categorySlug === '拾光').slice(0, 3);
+  const momentsHtml = moments.map((m) => momentNote(m)).join('\n');
+
+  return `<main class="site-main"><div class="desk-wrap">
+    ${hero}
+    <div class="desk-grid" id="desk">
+      <div class="desk-main">
+        <h2 class="desk-section-title"><span class="sec-dot"></span>最近写下的卡片</h2>
+        <div class="index-card-list">${cards}</div>
+        <div class="desk-more"><a href="archive.html">查看全部文章 →</a></div>
+      </div>
+      <aside class="desk-side">
+        <h3 class="desk-section-title"><span class="sec-dot"></span>分类</h3>
+        <div class="drawer-list">${drawers}</div>
+        <h3 class="desk-section-title"><span class="sec-dot"></span>索引词</h3>
+        ${tagCloud}
+      </aside>
     </div>
-  </section>`;
-  const recent = posts.slice(0, 6);
-  const list = recent.map((p) => postCard(p, '')).join('\n');
-  const latest = `<section class="home-section" id="latest">
-    <h2 class="home-section-title">📄 最新文章</h2>
-    <div class="post-list">${list}</div>
-    <div class="home-more"><a href="archive.html">查看全部文章 →</a></div>
-  </section>`;
-  return `<main class="site-main"><div class="home-wrap">${hero}${catCards}${tagCloud}${latest}</div></main>`;
+    ${moments.length ? `<section class="moments-strip">
+      <h2 class="desk-section-title"><span class="sec-dot"></span>拾光 · 短笺</h2>
+      <div class="moments-list">${momentsHtml}</div>
+      <div class="desk-more"><a href="category/拾光.html">更多拾光 →</a></div>
+    </section>` : ''}
+  </div></main>`;
 }
 
+/* 书桌索引卡：手写便签风（四色轮换） */
+function deskCard(p, i) {
+  const v = ['note-a', 'note-b', 'note-c', 'note-d'][i % 4];
+  const tags = (p.tags || []).slice(0, 3).map((t) => `<span class="card-tag">${escapeHtml(t)}</span>`).join('');
+  return `<article class="index-card ${v}">
+    <a class="index-card-link" href="posts/${p.slug}.html">
+      <div class="card-top">
+        <span class="badge">${escapeHtml(p.category)}</span>
+        <time>${p.dateText}</time>
+      </div>
+      <h3 class="card-title">${escapeHtml(p.title)}</h3>
+      ${p.excerpt ? `<p class="card-excerpt">${escapeHtml(p.excerpt)}</p>` : ''}
+      ${tags ? `<div class="card-tags">${tags}</div>` : ''}
+    </a>
+  </article>`;
+}
+
+/* 分类抽屉 */
+function drawer(c) {
+  return `<a class="drawer" href="category/${c.slug}.html">
+    <span class="drawer-head"><span class="drawer-name">${escapeHtml(c.name)}</span><span class="drawer-count">${c.count}</span></span>
+    ${c.desc ? `<span class="drawer-desc">${escapeHtml(c.desc)}</span>` : ''}
+  </a>`;
+}
+
+/* 拾光短笺 */
+function momentNote(m) {
+  return `<a class="moment-note" href="posts/${m.slug}.html">
+    <time>${m.dateText}</time>
+    <p class="moment-text">${escapeHtml(m.excerpt || m.title)}</p>
+  </a>`;
+}
 function categoryContent(posts, cat) {
   const list = posts
     .filter((p) => p.categorySlug === cat.slug)
