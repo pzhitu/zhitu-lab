@@ -314,7 +314,8 @@ function drawer(c) {
 
 /* 拾光短笺 */
 function momentNote(m, i) {
-  const v = ['note-a', 'note-b', 'note-c', 'note-d', 'note-e', 'note-f', 'note-g', 'note-h'][i % 8];
+  // 拾光色序与最近卡片错开（偏移 3 位），避免视觉重复
+  const v = ['note-a', 'note-b', 'note-c', 'note-d', 'note-e', 'note-f', 'note-g', 'note-h'][(i + 3) % 8];
   return `<a class="moment-note ${v}" href="posts/${m.slug}.html">
     <time>${m.dateText}</time>
     <p class="moment-text">${escapeHtml(m.excerpt || m.title)}</p>
