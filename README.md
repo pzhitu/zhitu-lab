@@ -81,8 +81,7 @@ zhitu-lab/
 │   ├── site.css          # 站点外壳样式
 │   ├── app.js            # 主题切换 / 搜索 / 目录 / 灯箱 / PWA
 │   ├── studio.js         # 在线配色工坊
-│   ├── sw.js             # Service Worker
-│   └── icons/            # 印章「知」Logo 预渲染资源（PNG/SVG）
+│   └── sw.js             # Service Worker
 ├── phycat/               # Phycat 原始资源（引擎 CSS + 配色 CSS + 字体）
 ├── content/
 │   ├── posts/            # 文章（.md），图片放 images/<文档名>/

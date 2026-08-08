@@ -9,7 +9,7 @@
 - **站名**：知途的研习室（英文 Zhitu's Lab，域名 zhi-tu.me）
 - **副标语**：知途以明向，格物以致知。
 - **欢迎语**：你好，我是知途。欢迎来到我的研习室——这儿有点乱，但很舒服，随便坐。
-- **Logo**：印章「知」——朱砂红印 + 纸底，白文「知」字（资源预渲染于 site/icons/ 与 site/favicon.svg，由 tools/generate-icons.py 重新生成，红/绿可选）
+- **Logo**：星轨（彗星）——渐隐渐亮的绿色轨迹 + 琥珀四角星，寓意「知途的轨迹，路的尽头有光」；纯几何、纯 Node 生成（lib/icon.js），无字体依赖
 - **技术栈**：Node.js + markdown-it + highlight.js + MathJax（构建期 SVG）+ 原生前端 JS
 - **部署**：`dist/` 纯静态，部署到自有服务器（Nginx/Caddy），无后端、无框架、无 CDN 依赖
 
@@ -42,7 +42,7 @@ node build.js        # 等同 npm run build
 ## 品牌约束
 
 - 站名 / 副标语 / 欢迎语见上文，全局统一（`build.js` 的 SITE_NAME/SITE_DESC、`templates/layout.html` 页脚、`manifest.webmanifest`）
-- 不要使用「π」作为品牌标识（已弃用，Logo 为印章「知」）
+- 不要使用「π」或文字/字符作为品牌标识（已弃用，Logo 为星轨图形）
 - 无评论系统、无 RSS（用户明确不要）；不引入后端
 
 ## 用户偏好

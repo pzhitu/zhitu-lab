@@ -5,6 +5,7 @@ const http = require('http');
 const grayMatter = require('gray-matter');
 const { THEMES, DEFAULT_THEME, mergeTheme } = require('./lib/themes');
 const { renderMarkdown } = require('./lib/renderer');
+const iconGen = require('./lib/icon');
 
 const ROOT = __dirname;
 const CONTENT_POSTS = path.join(ROOT, 'content', 'posts');
@@ -19,7 +20,7 @@ const SITE_DESC = '知途的个人知识库：知途以明向，格物以致知�
 // 构建时间戳：给静态资源加 ?v= 缓存破坏，避免浏览器/SW 用旧缓存
 const BUILD_STAMP = Date.now();
 // 站点 Logo：印章「知」（朱砂红印 + 纸底，白文「知」字；资源由 tools/generate-icons.py 生成）
-const LOGO_SVG = fs.readFileSync(path.join(SITE_DIR, 'icons', 'logo-inline.svg'), 'utf-8').trim();
+const LOGO_SVG = iconGen.generateSvg({ inline: true });
 
 /* ---------- 工具 ---------- */
 function escapeHtml(s) {
@@ -555,12 +556,11 @@ content: block,
   };
   writeFile('assets/site-meta.js', `window.PHYCAT_SITE_META = ${JSON.stringify(meta)};\n`);
 
-  // PWA：图标（预渲染资源，由 tools/generate-icons.py 生成） / manifest / service worker
+  // PWA：图标（lib/icon.js 纯 Node 生成星轨 Logo）/ manifest / service worker
   fs.mkdirSync(path.join(DIST, 'assets', 'icons'), { recursive: true });
-  for (const f of ['icon-192.png', 'icon-512.png', 'icon.svg']) {
-    const src = path.join(SITE_DIR, 'icons', f);
-    if (fs.existsSync(src)) fs.copyFileSync(src, path.join(DIST, 'assets', 'icons', f));
-  }
+  fs.writeFileSync(path.join(DIST, 'assets', 'icons', 'icon-192.png'), iconGen.generatePng(192));
+  fs.writeFileSync(path.join(DIST, 'assets', 'icons', 'icon-512.png'), iconGen.generatePng(512));
+  fs.writeFileSync(path.join(DIST, 'assets', 'icons', 'icon.svg'), iconGen.generateSvg());
   for (const f of ['sw.js', 'manifest.webmanifest']) {
     if (fs.existsSync(path.join(SITE_DIR, f))) {
       if (f === 'sw.js') {

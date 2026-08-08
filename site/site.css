@@ -256,6 +256,7 @@ a.tag:hover { color: var(--site-accent); background: color-mix(in srgb, var(--si
   margin: 0 auto 20px;
   display: flex; align-items: center; justify-content: center;
   filter: drop-shadow(0 4px 14px rgba(0,0,0,.12));
+  color: var(--site-text);
   box-shadow: 0 12px 32px color-mix(in srgb, var(--site-accent) 42%, transparent);
   user-select: none;
 }
