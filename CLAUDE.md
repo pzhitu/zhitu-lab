@@ -1,106 +1,53 @@
 # CLAUDE.md
 
-This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
+本项目说明，供 Codex / Claude Code 在此仓库工作时参考。
 
-@AGENTS.md
+## 项目概述
 
-## Project overview
+**知途的研习室（Zhitu's Lab）** —— 知途的个人博客 / 知识库。纯静态站点生成器：Node.js 构建脚本 + markdown-it 渲染 + Phycat 主题引擎。
 
-**Zhitu Space** — a personal blog for 知途 (a Chinese engineering graduate student). The site uses a "research room" metaphor: CLI terminal navigation bar, handwritten index cards for article previews, library card catalog for categories, and clean paper for reading.
+- **站名**：知途的研习室（英文 Zhitu's Lab，域名 zhi-tu.me）
+- **副标语**：知途以明向，格物以致知。
+- **欢迎语**：你好，我是知途。欢迎来到我的研习室——这儿有点乱，但很舒服，随便坐。
+- **Logo**：蜿蜒小径 + 终点光点（绿色渐变圆角方块 + 白色小路 + 琥珀光点）
+- **技术栈**：Node.js + markdown-it + highlight.js + MathJax（构建期 SVG）+ 原生前端 JS
+- **部署**：`dist/` 纯静态，部署到自有服务器（Nginx/Caddy），无后端、无框架、无 CDN 依赖
 
-- **Stack**: Next.js 16.2 (App Router) + TypeScript + Tailwind CSS v4 + MDX
-- **Deployed on**: Vercel (via GitHub `pzhitu/zhitu-lab`)
-- **Fonts**: Noto Serif SC (body/serif), JetBrains Mono (code/mono) — loaded from Google Fonts in root layout
-
-## Commands
+## 命令
 
 ```bash
-npm run dev        # Start dev server (Turbopack, default port 3000)
-npm run build      # Production build
-npm run start      # Start production server
-npm run lint       # ESLint
+npm run build        # 构建静态站点到 dist/
+npm run serve        # 构建 + 本地预览 http://localhost:8765（可追加端口号）
+node build.js        # 等同 npm run build
 ```
 
-## Architecture: layers of the framework
+## 架构
 
-The site has three visual layers matching the "research room" metaphor:
+- `build.js`：唯一入口。读 `content/posts/*.md`（gray-matter 解析 frontmatter）→ `lib/renderer.js` 渲染 → 按 `templates/layout.html` 模板生成全部 HTML 到 `dist/`
+- `lib/renderer.js`：markdown-it 渲染管线，输出与 Typora 导出兼容的 DOM 类名（`md-fences` / `CodeMirror` / `md-heading` / `table-wrap` / `md-alert`），数学公式用 MathJax 在构建期转为 SVG
+- `lib/themes.js`：11 套主题 = 引擎 CSS（`phycat.light.css` / `phycat.dark.css`）+ 配色变量文件，构建期合并为 `dist/assets/themes/theme-<id>.css`
+- `lib/icon.js`：纯 Node 生成 Logo PNG/SVG（无第三方依赖）
+- `site/`：前端资源（`site.css` 外壳样式、`app.js` 主题切换/搜索/目录/灯箱/PWA、`studio.js` 配色工坊、`sw.js` Service Worker）
+- `templates/layout.html`：页面骨架，`{{var}}` 占位符由 `renderTemplate` 替换
 
-| Layer | Component | Visual role |
-|-------|-----------|-------------|
-| Global frame | `nav.tsx` + `status-bar.tsx` | Terminal-style breadcrumb bar (top) + keyboard shortcut bar (bottom) |
-| Content cards | `post-card.tsx` / `desk.tsx` | Handwritten index cards with note backgrounds (home), drawer-grid for categories |
-| Reading | `mdx-content.tsx` | Clean paper layout, max-width prose, `paper-content` typography utilities |
+## 内容体系（重要）
 
-## Color system (globals.css)
+- 文章放 `content/posts/*.md`，**分类由 frontmatter 驱动**（不硬编码），构建时自动汇总生成分类页/标签页/归档/搜索索引
+- 当前分类：课题研究 / 论文笔记 / 技术笔记 / 读书笔记 / 拾光（介绍在 `content/categories.md`）
+- frontmatter：`title` 必填；`date`、`updated`、`category`、`tags`、`excerpt`；可选 `toc / tocnum / headnum`（默认 true）
+- 图片约定：`content/posts/images/<文档名>/`，正文相对路径引用；构建时自动复制到 `dist/posts/`
+- 独立页面放 `content/pages/*.md`，生成到站点根目录
+- **「拾光」**是普通分类，但首页有「拾光·短笺」展示位（取该分类最新数篇），改动首页时保持该约定
 
-Two **independent** CSS custom property palettes — light and dark modes share NO values:
+## 品牌约束
 
-- Light: `--color-paper: #fffdf9`, `--color-ink: #1f1c18`, `--color-accent: #b06814`
-- Dark: `--color-paper-dark: #0d0c0a`, `--color-ink-dark: #f5f0e5`, `--color-accent-dark: #f0b040`
+- 站名 / 副标语 / 欢迎语见上文，全局统一（`build.js` 的 SITE_NAME/SITE_DESC、`templates/layout.html` 页脚、`manifest.webmanifest`）
+- 不要使用「π」作为品牌标识（已弃用，Logo 为蜿蜒小径+光点）
+- 无评论系统、无 RSS（用户明确不要）；不引入后端
 
-Dark mode is activated by `ThemeProvider` via `html.dark body` in CSS. Components reference dark tokens either through Tailwind `dark:` variants (e.g. `dark:text-ink-dark`) or inline style objects using the resolved theme state.
+## 用户偏好
 
-**IMPORTANT**: `nav.tsx`, `status-bar.tsx`, and `command-palette.tsx` use hardcoded hex colors (not CSS custom properties) because they adapt to theme via `useTheme()` in JS. When updating both light and dark values, check both the CSS custom properties AND these component-level inline styles.
-
-## CSS architecture (Tailwind v4)
-
-Tailwind v4 uses `@theme` blocks (not `tailwind.config.ts`). Custom colors are defined in `@theme { ... }` in `globals.css`. Classes like `text-ink-subtle`, `bg-surface`, `dark:text-ink-dark`, `dark:bg-surface-dark` map to the custom properties.
-
-`@tailwindcss/typography` plugin is loaded via `@plugin "@tailwindcss/typography"`.
-
-MDX article typography uses `.paper-content` utility class. Code highlighting uses `rehype-pretty-code` with `github-light`/`github-dark` themes.
-
-## Content system (src/lib/content.ts)
-
-MDX files live in `content/<category>/<slug>.mdx`. Frontmatter uses `gray-matter`:
-
-```yaml
----
-title: "文章标题"
-date: 2026-07-14
-tags: ["标签1", "标签2"]
-description: "文章描述"
----
-```
-
-Categories: `projects`, `papers`, `debugging`, `interests`, `moments`. Defined in `CATEGORIES` array in `content.ts`.
-
-`content.ts` uses Node `fs` — it CANNOT be imported by Client Components. Always fetch data in Server Components (pages) and pass as props.
-
-## Route structure
-
-```
-/                              → page.tsx (Server) → Desk (Client, receives props)
-/[category]                    → [category]/page.tsx (Server, lists posts in category)
-/[category]/[slug]             → [category]/[slug]/page.tsx (Server, renders MDX)
-/archive                       → archive/page.tsx (Server, year-grouped)
-/tags                          → tags/page.tsx (Server, filterable by ?tag=)
-/about                         → about/page.tsx (Server, static content)
-/api/search                    → api/search/route.ts (GET, returns all post metadata)
-```
-
-## Server vs Client Components
-
-- **All pages** (`page.tsx`) are Server Components by default — they can use `fs`, `async`, and fetch data directly
-- **Client Components**: `desk.tsx`, `post-card.tsx`, `nav.tsx`, `status-bar.tsx`, `command-palette.tsx`, `theme-provider.tsx`, `lamp-toggle.tsx`, `footer.tsx`
-- **`mdx-content.tsx`**: MUST be a Server Component — `MDXRemote` from `next-mdx-remote/rsc` is an async Server Component and cannot have `'use client'`
-
-In Next.js 16, `params` and `searchParams` are **Promises** — always `await` them:
-
-```tsx
-export default async function Page({ params }: { params: Promise<{ slug: string }> }) {
-  const { slug } = await params
-  // ...
-}
-```
-
-## The "reset" bit
-
-No i18n (single-language Chinese), no Giscus, no RSS yet — these were in the original plan but not implemented. The site is fully static and database-free.
-
-## User preferences (important)
-
-- **Do NOT push to GitHub.** Output terminal commands for the user to run manually.
-- **Output a summary** after completing each significant task.
-- **Do not repeat the same command** if it returns the same result twice — stop and ask.
-- The user reads and writes Chinese. Code comments and UI text are in Chinese; technical identifiers use English.
+- **不要 push 到 GitHub**：只做本地提交，推送命令输出给用户手动执行
+- 每完成一项任务输出总结
+- 同一命令连续两次结果相同则停止并询问
+- 用户使用中文读写：代码注释与界面文案用中文，技术标识符用英文

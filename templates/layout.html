@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>{{pageTitle}}</title>
+<meta name="description" content="{{pageDesc}}">
+<link rel="manifest" href="{{root}}manifest.webmanifest">
+<meta name="theme-color" content="#11aa63">
+<link rel="apple-touch-icon" href="{{root}}assets/icons/icon-192.png">
+<link rel="icon" type="image/svg+xml" href="{{root}}assets/favicon.svg">
+<link rel="preload" href="{{root}}assets/phycat/LXGWWenKai-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="{{root}}assets/phycat/Cascadia-Code-Regular.woff2" as="font" type="font/woff2" crossorigin>
+<script>
+  // 主题初始化：head 中同步写入（放在 site.css 之前，便于站点外壳覆盖主题细节）
+  (function () {
+    var theme = null;
+    try { theme = localStorage.getItem('phycat-theme'); } catch (e) {}
+    var custom = null;
+    try { custom = JSON.parse(localStorage.getItem('phycat-custom-theme') || 'null'); } catch (e) {}
+    if (custom && custom.mode) {
+      theme = custom.mode === 'dark' ? 'vampire' : 'forest';
+    } else if (!theme) {
+      var dark = false;
+      try { dark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches; } catch (e) {}
+      theme = dark ? 'vampire' : '{{defaultTheme}}';
+    }
+    document.write('<link id="theme-css" rel="stylesheet" href="{{root}}assets/themes/theme-' + theme + '.css?v={{assetStamp}}">');
+    // 自定义配色：首帧前注入变量，避免闪烁
+    if (custom && custom.vars) {
+      var v = '';
+      for (var k in custom.vars) { if (custom.vars.hasOwnProperty(k)) v += k + ':' + custom.vars[k] + ';'; }
+      document.write('<style id="custom-theme">:root{' + v + '}</style>');
+    }
+  })();
+</script>
+<link rel="stylesheet" href="{{root}}assets/site.css?v={{assetStamp}}">
+<link rel="stylesheet" href="{{root}}assets/studio.css?v={{assetStamp}}">
+</head>
+<body data-root="{{root}}" data-stamp="{{assetStamp}}" class="{{bodyClass}}">
+<div class="reading-progress" id="readingProgress" aria-hidden="true"></div>
+<header class="site-header">
+  <div class="site-header-inner">
+    <a class="site-brand" href="{{root}}index.html"><svg class="brand-icon" viewBox="0 0 512 512" aria-hidden="true"><defs><linearGradient id="brand-g" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#3ad49a"/><stop offset="1" stop-color="#0a7f49"/></linearGradient></defs><rect x="24" y="24" width="464" height="464" rx="112" fill="url(#brand-g)"/><path d="M120 392 C190 396 216 360 216 316 C216 272 168 256 176 216 C182 184 226 170 262 158 C316 140 356 118 392 100" fill="none" stroke="#ffffff" stroke-width="40" stroke-linecap="round"/><circle cx="414" cy="82" r="34" fill="#ffb347"/></svg>{{siteName}}</a>
+    <nav class="site-nav">
+      {{categoryNav}}
+    </nav>
+    <div class="theme-area">
+      <button class="theme-btn" id="searchBtn" type="button" title="搜索文章（Ctrl+K）" aria-label="搜索文章">🔍 搜索</button>
+      <button class="theme-btn" id="themeBtn" type="button" aria-haspopup="true" aria-expanded="false">
+        <span class="theme-btn-dot" id="themeBtnDot"></span>
+        <span id="themeBtnLabel">主题</span>
+      </button>
+      <div class="theme-panel" id="themePanel" hidden>
+        <div class="theme-panel-title">🎨 选择主题配色</div>
+        <div class="theme-group-label">亮色系 · Phycat Color</div>
+        <div class="theme-grid" id="themeGridColor"></div>
+        <div class="theme-group-label">暗色系 · Phycat Neon</div>
+        <div class="theme-grid" id="themeGridNeon"></div>
+      </div>
+    </div>
+  </div>
+</header>
+{{content}}
+<div class="search-overlay" id="searchOverlay" hidden>
+  <div class="search-box" role="dialog" aria-label="搜索文章">
+    <div class="search-head">
+      <span class="search-title">🔍 搜索文章</span>
+      <span class="search-kbd">Ctrl + K</span>
+      <button type="button" class="search-close" id="searchClose" aria-label="关闭">×</button>
+    </div>
+    <div class="search-input-wrap">
+      <input type="search" id="searchInput" placeholder="输入关键词，回车打开第一条结果…" autocomplete="off" spellcheck="false">
+    </div>
+    <div class="search-hint" id="searchHint">支持标题 / 正文 / 分类 / 标签搜索</div>
+    <div class="search-results" id="searchResults"></div>
+  </div>
+</div>
+<footer class="site-footer">
+  <p class="site-brand-line">知途的研习室 · Zhitu&rsquo;s Lab &mdash; 知途以明向，格物以致知。</p>
+  <p>Powered by <a href="https://github.com/sumruler/typora-theme-phycat" target="_blank" rel="noopener">Phycat</a> 主题 · 由 <code>npm run build</code> 静态生成</p>
+</footer>
+<button class="toc-toggle" id="tocToggle" type="button" aria-label="打开目录">☰ 目录</button>
+<button class="back-top" id="backTop" type="button" aria-label="回到顶部" title="回到顶部">↑</button>
+<script src="{{root}}assets/site-meta.js?v={{assetStamp}}"></script>
+<script src="{{root}}assets/app.js?v={{assetStamp}}"></script>
+<script src="{{root}}assets/studio-static.js?v={{assetStamp}}"></script>
+<script src="{{root}}assets/studio.js?v={{assetStamp}}"></script>
+<script>
+  // Mermaid 图表支持（可选，加载失败则原样显示代码）
+  if (document.querySelector('.md-diagram.mermaid')) {
+    var s = document.createElement('script');
+    s.src = '{{root}}assets/mermaid.min.js?v={{assetStamp}}';
+    s.onload = function () { if (window.PhycatMermaid) window.PhycatMermaid.init(); };
+    document.body.appendChild(s);
+  }
+</script>
+</body>
+</html>
