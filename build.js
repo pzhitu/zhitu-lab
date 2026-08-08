@@ -289,7 +289,7 @@ function homeContent(posts, cats, tags) {
 
 /* 书桌索引卡：手写便签风（四色轮换） */
 function deskCard(p, i) {
-  const v = ['note-a', 'note-b', 'note-c', 'note-d'][i % 4];
+  const v = ['note-a', 'note-b', 'note-c', 'note-d', 'note-e', 'note-f', 'note-g', 'note-h'][i % 8];
   const tags = (p.tags || []).slice(0, 3).map((t) => `<span class="card-tag">${escapeHtml(t)}</span>`).join('');
   return `<article class="index-card ${v}">
     <a class="index-card-link" href="posts/${p.slug}.html">
@@ -314,7 +314,7 @@ function drawer(c) {
 
 /* 拾光短笺 */
 function momentNote(m, i) {
-  const v = ['note-a', 'note-b', 'note-c', 'note-d'][i % 4];
+  const v = ['note-a', 'note-b', 'note-c', 'note-d', 'note-e', 'note-f', 'note-g', 'note-h'][i % 8];
   return `<a class="moment-note ${v}" href="posts/${m.slug}.html">
     <time>${m.dateText}</time>
     <p class="moment-text">${escapeHtml(m.excerpt || m.title)}</p>

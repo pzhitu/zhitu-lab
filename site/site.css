@@ -1450,6 +1450,10 @@ kbd { font-family: CascadiaCode, Consolas, monospace; }
 .index-card.note-b { background: var(--note-b, var(--card-bg)); }
 .index-card.note-c { background: var(--note-c, var(--card-bg)); }
 .index-card.note-d { background: var(--note-d, var(--card-bg)); }
+.index-card.note-e { background: var(--note-e, var(--card-bg)); }
+.index-card.note-f { background: var(--note-f, var(--card-bg)); }
+.index-card.note-g { background: var(--note-g, var(--card-bg)); }
+.index-card.note-h { background: var(--note-h, var(--card-bg)); }
 .index-card-link { display: flex; flex-direction: column; gap: 7px; text-decoration: none; color: inherit; }
 .index-card-link::after { content: ''; position: absolute; inset: 0; border-radius: inherit; }
 .index-card .badge { align-self: flex-start; position: relative; z-index: 1; }
@@ -1516,15 +1520,24 @@ kbd { font-family: CascadiaCode, Consolas, monospace; }
 .moment-note.note-b { background: var(--note-b, var(--card-bg)); }
 .moment-note.note-c { background: var(--note-c, var(--card-bg)); }
 .moment-note.note-d { background: var(--note-d, var(--card-bg)); }
+.moment-note.note-e { background: var(--note-e, var(--card-bg)); }
+.moment-note.note-f { background: var(--note-f, var(--card-bg)); }
+.moment-note.note-g { background: var(--note-g, var(--card-bg)); }
+.moment-note.note-h { background: var(--note-h, var(--card-bg)); }
 .moment-note time { font-family: CascadiaCode, Consolas, monospace; font-size: .68rem; color: var(--site-muted); }
 .moment-text { margin: 0; font-size: .86rem; color: var(--site-text); line-height: 1.7; }
 
 /* 便签四色（随主题自适应） */
 :root {
-  --note-a: color-mix(in srgb, var(--site-accent) 7%, var(--card-bg, #fff));
-  --note-b: color-mix(in srgb, #f0b04c 13%, var(--card-bg, #fff));
-  --note-c: color-mix(in srgb, #e98aa5 13%, var(--card-bg, #fff));
-  --note-d: color-mix(in srgb, #5fbf8e 14%, var(--card-bg, #fff));
+  /* 便签八色：以主题色为基准，色环每 45° 衍生（HSL 色相旋转 + 纸底混合，随主题自适应） */
+  --note-a: color-mix(in srgb, var(--site-accent) 13%, var(--card-bg, #fff));
+  --note-b: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 45) s l) 13%, var(--card-bg, #fff));
+  --note-c: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 90) s l) 13%, var(--card-bg, #fff));
+  --note-d: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 135) s l) 13%, var(--card-bg, #fff));
+  --note-e: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 180) s l) 13%, var(--card-bg, #fff));
+  --note-f: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 225) s l) 13%, var(--card-bg, #fff));
+  --note-g: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 270) s l) 13%, var(--card-bg, #fff));
+  --note-h: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 315) s l) 13%, var(--card-bg, #fff));
 }
 
 @media (max-width: 900px) {
