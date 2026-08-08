@@ -1424,7 +1424,7 @@ kbd { font-family: CascadiaCode, Consolas, monospace; }
   font-weight: 600;
   letter-spacing: 2px;
   color: var(--site-muted);
-  margin: 0 0 14px;
+  margin: 0 0 8px;
   text-transform: uppercase;
 }
 .sec-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--site-accent); flex: none; }
@@ -1476,7 +1476,8 @@ kbd { font-family: CascadiaCode, Consolas, monospace; }
 .desk-more { text-align: right; margin-top: 14px; }
 .desk-more a { color: var(--site-muted); text-decoration: none; font-size: .82rem; }
 .desk-more a:hover { color: var(--site-accent); }
-.desk-side { display: flex; flex-direction: column; gap: 26px; }
+.desk-side { display: flex; flex-direction: column; gap: 18px; }
+.desk-side .tag-cloud { padding: 4px 0 0; }
 .drawer-list { display: flex; flex-direction: column; gap: 10px; }
 .drawer {
   display: flex;
