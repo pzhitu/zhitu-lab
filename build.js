@@ -635,7 +635,7 @@ content: block,
 
   // 字体
   fs.mkdirSync(path.join(DIST, 'assets', 'phycat'), { recursive: true });
-  for (const f of ['Cascadia-Code-Regular.ttf', 'Cascadia-Code-Regular.woff2', 'LXGWWenKai-Regular.ttf', 'LXGWWenKai-Regular.woff2']) {
+  for (const f of ['Cascadia-Code-Regular.woff2', 'LXGWWenKai-Regular.woff2']) { // 仅 woff2，TTF 回退字体不再打包
     if (fs.existsSync(path.join(PHYCAT_DIR, f))) {
       fs.copyFileSync(path.join(PHYCAT_DIR, f), path.join(DIST, 'assets', 'phycat', f));
     }
