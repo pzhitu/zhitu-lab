@@ -945,6 +945,9 @@ body.has-toc .toc-toggle { display: flex; }
   border-top: 1px solid var(--site-border);
 }
 .site-footer code { font-family: CascadiaCode, Consolas, monospace; font-size: .78rem; }
+.site-footer .site-links { margin-top: 4px; }
+.site-footer .site-links a { color: var(--site-muted); text-decoration: none; transition: color .2s ease; }
+.site-footer .site-links a:hover { color: var(--site-accent); }
 
 /* ---------------- Responsive ---------------- */
 @media (max-width: 760px) {
