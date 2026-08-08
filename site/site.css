@@ -1529,15 +1529,15 @@ kbd { font-family: CascadiaCode, Consolas, monospace; }
 
 /* 便签四色（随主题自适应） */
 :root {
-  /* 便签八色：主题色同一色相的浓度阶梯（6%→34% 与纸底混合，随主题自适应，不跑偏） */
-  --note-a: color-mix(in srgb, var(--site-accent) 6%, var(--card-bg, #fff));
-  --note-b: color-mix(in srgb, var(--site-accent) 9%, var(--card-bg, #fff));
-  --note-c: color-mix(in srgb, var(--site-accent) 12%, var(--card-bg, #fff));
-  --note-d: color-mix(in srgb, var(--site-accent) 15%, var(--card-bg, #fff));
-  --note-e: color-mix(in srgb, var(--site-accent) 19%, var(--card-bg, #fff));
-  --note-f: color-mix(in srgb, var(--site-accent) 23%, var(--card-bg, #fff));
-  --note-g: color-mix(in srgb, var(--site-accent) 28%, var(--card-bg, #fff));
-  --note-h: color-mix(in srgb, var(--site-accent) 34%, var(--card-bg, #fff));
+  /* 便签八色：主题色附近小幅色相摆动（±25° 内）+ 深浅交错，同族又有变化、不成梯度 */
+  --note-a: color-mix(in srgb, hsl(from var(--site-accent) calc(h - 25) s l) 10%, var(--card-bg, #fff));
+  --note-b: color-mix(in srgb, hsl(from var(--site-accent) calc(h - 12) s l) 16%, var(--card-bg, #fff));
+  --note-c: color-mix(in srgb, var(--site-accent) 9%, var(--card-bg, #fff));
+  --note-d: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 12) s l) 18%, var(--card-bg, #fff));
+  --note-e: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 25) s l) 12%, var(--card-bg, #fff));
+  --note-f: color-mix(in srgb, hsl(from var(--site-accent) calc(h - 18) s l) 22%, var(--card-bg, #fff));
+  --note-g: color-mix(in srgb, hsl(from var(--site-accent) calc(h + 18) s l) 26%, var(--card-bg, #fff));
+  --note-h: color-mix(in srgb, var(--site-accent) 30%, var(--card-bg, #fff));
 }
 
 @media (max-width: 900px) {
