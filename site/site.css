@@ -1175,39 +1175,77 @@ pre.md-fences:hover .code-copy { opacity: 1; }
 kbd { font-family: CascadiaCode, Consolas, monospace; }
 
 /* ---------- 顶部终端导航栏 ---------- */
+/* zhitu-lab 风格终端栏 token（随主题自适应） */
+:root {
+  --term-bg: var(--bg-color, #f3efe6);
+  --term-fg: var(--text-color-secondary, #7a6d5a);
+  --term-fg-hover: var(--text-color, #4a3d2e);
+  --term-accent: var(--element-color, var(--primary-color, #b8620e));
+  --term-border: var(--border-color, #d4c9b6);
+}
+.term-header {
+  background: var(--term-bg);
+  -webkit-backdrop-filter: none;
+  backdrop-filter: none;
+  border-bottom: 1px solid var(--term-border);
+  user-select: none;
+}
+.term-header .site-header-inner {
+  padding: 6px 22px;
+  gap: 14px;
+}
+.term-header .site-brand {
+  gap: 0;
+  padding: 2px 0;
+}
+.term-header .brand-icon { width: 22px; height: 22px; opacity: .92; }
 .term-bar {
   display: inline-flex;
   align-items: center;
   gap: 1px;
   font-family: CascadiaCode, Consolas, monospace;
-  font-size: .78rem;
-  color: var(--site-muted);
-  border: 1px solid var(--site-border);
-  border-radius: 8px;
-  background: color-mix(in srgb, var(--page-bg, #fff) 55%, transparent);
-  padding: 3px 10px;
+  font-size: .8rem;
+  color: var(--term-fg);
   white-space: nowrap;
-  max-width: 300px;
-  overflow: hidden;
+  min-width: 0;
 }
-.term-user { color: var(--site-accent); font-weight: 700; }
-.term-colon, .term-tilde { opacity: .7; }
+.term-user { color: var(--term-accent); font-weight: 700; }
+.term-colon { opacity: .6; }
 .term-path {
-  max-width: 170px;
+  color: var(--term-fg);
+  max-width: 220px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
 }
+.term-path a { color: var(--term-fg); text-decoration: none; transition: color .2s ease; }
+.term-path a:hover { color: var(--term-fg-hover); }
 .term-cursor {
   display: inline-block;
-  width: 7px;
-  height: 13px;
+  width: 6px;
+  height: 14px;
   margin-left: 3px;
-  background: var(--site-accent);
+  background: var(--term-accent);
   animation: term-blink 1s step-end infinite;
   border-radius: 1px;
 }
 @keyframes term-blink { 0%, 100% { opacity: 1; } 50% { opacity: 0; } }
+
+/* 终端栏内按钮：去边框、hover 提亮（更像 zhitu） */
+.term-header .theme-btn {
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  color: var(--term-fg);
+  transition: background .2s ease, color .2s ease;
+}
+.term-header .theme-btn:hover { background: color-mix(in srgb, var(--term-fg) 10%, transparent); color: var(--term-fg-hover); }
+.term-header .theme-btn kbd {
+  background: color-mix(in srgb, var(--term-bg) 60%, var(--term-fg) 12%);
+  color: var(--term-fg);
+  border-color: var(--term-border);
+}
+.term-header .theme-btn-dot { box-shadow: 0 0 0 3px color-mix(in srgb, var(--term-accent) 22%, transparent); }
 
 /* ---------- 头部按钮（检索 / 掌灯 / 主题） ---------- */
 .theme-btn kbd {
@@ -1332,6 +1370,7 @@ kbd { font-family: CascadiaCode, Consolas, monospace; }
 /* ---------- 响应式 ---------- */
 @media (max-width: 900px) {
   .term-bar { display: none; }
+  .term-header .site-header-inner { padding: 8px 14px; gap: 10px; }
 }
 @media (max-width: 640px) {
   .status-inner { padding: 6px 12px; gap: 14px; }
