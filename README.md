@@ -94,6 +94,13 @@ zhitu-lab/
 
 `dist/` 为纯静态站点，可部署到任意静态托管或自有服务器（Nginx / Caddy 指向 `dist/`）。站点默认主题为 `forest`。
 
+
+### 当前服务器（腾讯云 Ubuntu 24.04 + Nginx + Cloudflare）
+
+1. 本地构建：`node build.js`（或 `npm run build`）
+2. 上传：`rsync -avz --delete dist/ ubuntu@82.156.131.206:/var/www/zhitu/`
+3. Nginx 已配置为静态托管 `/var/www/zhitu`：assets 长缓存 immutable、HTML no-cache、404 页、gzip；SSL 由 Certbot（Let's Encrypt）管理；域名经 Cloudflare 代理
+4. 回滚：服务器备份在 `/home/ubuntu/projects/zhitu-lab.bak-*`（旧项目）与 `/etc/nginx/sites-available/zhitu.bak-*`（旧配置）
 ## 许可与致谢
 
 - 主题：[Phycat](https://github.com/sumruler/typora-theme-phycat)（MIT，来自 sumruler）
