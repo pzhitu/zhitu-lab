@@ -250,7 +250,7 @@ function homeContent(posts, cats, tags) {
   </section>`;
 
   // 书桌：最近写下的卡片（四色索引卡轮换）
-  const cards = posts.slice(0, 6).map((p, i) => deskCard(p, i)).join('\n');
+  const cards = posts.slice(0, 8).map((p, i) => deskCard(p, i)).join('\n');
   // 分类抽屉
   const drawers = cats.map((c) => drawer(c)).join('\n');
   // 索引词（标签云）
@@ -261,7 +261,7 @@ function homeContent(posts, cats, tags) {
       }).join('\n')}
     </div>`;
   // 拾光·短笺
-  const moments = posts.filter((p) => p.categorySlug === '拾光').slice(0, 3);
+  const moments = posts.filter((p) => p.categorySlug === '拾光').slice(0, 4);
   const momentsHtml = moments.map((m, i) => momentNote(m, i)).join('\n');
 
   return `<main class="site-main"><div class="desk-wrap">
